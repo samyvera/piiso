@@ -7,6 +7,9 @@ class Display {
         this.scale = 16;
         this.shadowStep = 1 / 16;
 
+        this.backgroundImg = document.createElement("img");
+        this.backgroundImg.src = "img/background.png";
+
         // this.blockImg = document.createElement("img");
         // this.blockImg.src = "img/block.png";
         // this.playerImg = document.createElement("img");
@@ -83,6 +86,19 @@ class Display {
             );
         }
 
+        this.drawBackground = () => {
+            this.cx.drawImage(this.backgroundImg,
+                0,
+                0,
+                128,
+                64,
+                this.canvas.width / 2 / this.zoom - 64,
+                this.canvas.height / 2 / this.zoom - 32,
+                128,
+                64
+            );
+        }
+
         this.drawScene = () => {
             this.cx.translate(
                 this.canvas.width / 2 / this.zoom,
@@ -150,6 +166,9 @@ class Display {
                 this.canvas.width / this.zoom,
                 this.canvas.height / this.zoom
             );
+
+            //background
+            this.drawBackground();
 
             //scene
 
