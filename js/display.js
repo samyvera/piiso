@@ -90,19 +90,19 @@ class Display {
             this.cx.drawImage(this.backgroundImg,
                 0,
                 0,
-                128,
-                64,
-                this.canvas.width / 2 / this.zoom - 64,
-                this.canvas.height / 2 / this.zoom - 32,
-                128,
-                64
+                192,
+                96,
+                this.canvas.width / 2 / this.zoom - 192 / 2,
+                this.canvas.height / 2 / this.zoom - 96 / 2,
+                192,
+                96
             );
         }
 
         this.drawScene = () => {
             this.cx.translate(
                 this.canvas.width / 2 / this.zoom - this.scale / 2,
-                this.canvas.height / 2 / this.zoom - this.scale * 2.5
+                this.canvas.height / 2 / this.zoom - this.scale * 3.5
             );
 
             var scene = this.game.scene;
@@ -149,7 +149,7 @@ class Display {
 
             this.cx.translate(
                 -this.canvas.width / 2 / this.zoom + this.scale / 2,
-                -this.canvas.height / 2 / this.zoom + this.scale * 2.5
+                -this.canvas.height / 2 / this.zoom + this.scale * 3.5
             );
         }
 
