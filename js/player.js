@@ -82,7 +82,7 @@ class Player {
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, -this.jumpSpeed)), this.collisionBox.size.plus(new Vector3D(0, 0, this.jumpSpeed)));
             if (this.isJumping) this.isJumping = false;
             else if (
-                !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.collidingCollisionBoxes([...game.scene.blocks.values()]).length)) {
+                !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length)) {
                 if (inputs.a) this.isJumping = true;
             }
 
