@@ -1,9 +1,8 @@
 class Player {
     constructor(id) {
-        this.pos = null;
-        this.size = null;
+        this.id = id;
 
-        this.inputList = [];
+        this.collisionBox = null;
 
         this.walkSpeed = 0.03125 * 2;
         this.jumpSpeed = 0.15625;
@@ -41,17 +40,18 @@ class Player {
                 this.direction = newDirection;
             }
 
-            // var newPosX = this.pos.plus(new Vector3D(this.speed.x, 0, 0));
-            // if (!obstaclesAt(newPosX, this.size, game.scene.blocks).length &&
-            //     inBound3D(newPosX, this.size, game.scene)) {
-            //     this.pos = newPosX;
-            // }
+            var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(this.speed.x, 0, 0)), this.collisionBox.size);
+            console.log(newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length)
+            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
+                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+                this.collisionBox = newCollisionBox;
+            }
 
-            // var newPosY = this.pos.plus(new Vector3D(0, this.speed.y, 0));
-            // if (!obstaclesAt(newPosY, this.size, game.scene.blocks).length &&
-            //     inBound3D(newPosY, this.size, game.scene)) {
-            //     this.pos = newPosY;
-            // }
+            var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, this.speed.y, 0)), this.collisionBox.size);
+            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
+                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+                this.collisionBox = newCollisionBox;
+            }
         }
 
         this.moveZ = game => {
@@ -77,31 +77,18 @@ class Player {
         }
 
         this.update = game => {
-            this.updateLastInputs(this.socdCleaner({...game.inputList.get(this.id)}));
-            var inputs = this.inputList[this.inputList.length - 1].inputs;
+            var inputs = this.socdCleaner({...game.inputList.get(this.id)});
+            var lastInputs = game.lastInputList.get(this.id);
 
             if (this.isJumping) this.isJumping = false;
             else if (
-                inputs.a &&
-                !this.speed.z &&
-                obstaclesAt(this.pos.plus(new Vector3D(0, 0, -this.jumpSpeed)), new Vector3D(this.size.x, this.size.y, this.jumpSpeed), game.scene.blocks).length) {
-                this.isJumping = true;
+                !this.speed.z && game.scene.blocks.has(Math.round(this.collisionBox.pos.x) + ', ' + Math.round(this.collisionBox.pos.y) + ', ' + this.collisionBox.pos.z-1)) {
+                if (inputs.a) this.isJumping = true;
+                console.log("canjump");
             }
 
             this.moveXY(game, inputs);
             this.moveZ(game);
-        }
-        
-        this.updateLastInputs = inputs => {
-            if (this.inputList.length > 0 && JSON.stringify(inputs) === JSON.stringify(this.inputList[this.inputList.length - 1].inputs)) {
-                this.inputList[this.inputList.length - 1].frames++;
-            } else {
-                if (this.inputList.length === 10) this.inputList.splice(0, 1);
-                this.inputList.push({
-                    inputs: inputs,
-                    frames: 1
-                });
-            }
         }
 
         this.socdCleaner = inputs => {

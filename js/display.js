@@ -61,6 +61,7 @@ class Display {
             //     this.scale * 1.5
             // );
 
+            this.cx.fillStyle = '#f00';
             this.cx.fillRect(
                 playerPos.x * this.scale - this.scale / 4,
                 playerPos.y * this.scale - this.scale / 2 - this.scale / 4,
@@ -96,8 +97,7 @@ class Display {
                     for (let y = 0; y <= k; y++) {
                         for (let z = 0; z <= k; z++) {
                             if (x + y + z === k) {
-                                if (!scene.blocks.has(x + ', ' + y + ', ' + z)) continue;
-                                else {
+                                if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
                                     var tilePos = v3toV2(new Vector3D(x, y, z));
 
                                     // this.cx.drawImage(this.blockImg,
@@ -109,6 +109,7 @@ class Display {
                                     //     this.scale, this.scale
                                     // );
 
+                                    this.cx.fillStyle = '#0f0';
                                     this.cx.fillRect(
                                         tilePos.x * this.scale,
                                         tilePos.y * this.scale,
@@ -116,11 +117,11 @@ class Display {
                                     );
                                 }
 
-                                if (player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor)).round().equals(new Vector3D(x, y, z))) {
-                                    this.drawPlayerShadow(v3toV2(player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor))));
-                                }
-                                if (new Vector3D(Math.round(player.pos.x), Math.round(player.pos.y), Math.floor(player.pos.z)).equals(new Vector3D(x, y, z))) {
-                                    this.drawPlayer(player, v3toV2(player.pos));
+                                // if (player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor)).round().equals(new Vector3D(x, y, z))) {
+                                //     this.drawPlayerShadow(v3toV2(player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor))));
+                                // }
+                                if (new Vector3D(Math.round(player.collisionBox.pos.x), Math.round(player.collisionBox.pos.y), Math.floor(player.collisionBox.pos.z)).equals(new Vector3D(x, y, z))) {
+                                    this.drawPlayer(player, v3toV2(player.collisionBox.pos));
                                 }
                             }
                         }
@@ -162,7 +163,7 @@ class Display {
                 this.cx.fillStyle = "#fff";
                 this.cx.font = 8 + "px consolas";
                 this.cx.fillText(
-                    "posX:" + player.pos.x + " posY:" + player.pos.y + " posZ:" + player.pos.z,
+                    "posX:" + player.collisionBox.pos.x + " posY:" + player.collisionBox.pos.y + " posZ:" + player.collisionBox.pos.z,
                     2,
                     8
                 );
