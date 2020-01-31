@@ -10,7 +10,7 @@ class CollisionBox {
                 this.pos.z + this.size.z < collisionBox.pos.z || this.pos.z > collisionBox.pos.z + collisionBox.size.z
             );
         };
-        this.collidingCollisionBoxes = collisionBoxList => collisionBoxList.map(collisionBox => this.collidesWith(collisionBox));
+        this.collidingCollisionBoxes = collisionBoxList => collisionBoxList.filter(collisionBox => this.collidesWith(collisionBox));
 
         this.intersects = collisionBox => {
             return !(
@@ -19,7 +19,7 @@ class CollisionBox {
                 this.pos.x + this.size.x <= collisionBox.pos.x || this.pos.x >= collisionBox.pos.x + collisionBox.size.x
             );
         };
-        this.intersectingCollisionBoxes = collisionBoxList => collisionBoxList.map(collisionBox => this.intersects(collisionBox));
+        this.intersectingCollisionBoxes = collisionBoxList => collisionBoxList.filter(collisionBox => this.intersects(collisionBox));
 
         this.isIncludedIn = collisionBox => {
             return !(
@@ -28,6 +28,6 @@ class CollisionBox {
                 this.pos.x + this.size.x > collisionBox.pos.x + collisionBox.size.x || this.pos.x < collisionBox.pos.x
             );
         };
-        this.includingCollisionBoxes = collisionBoxList => collisionBoxList.map(collisionBox => this.isIncludedIn(collisionBox));
+        this.includingCollisionBoxes = collisionBoxList => collisionBoxList.filter(collisionBox => this.isIncludedIn(collisionBox));
     }
 }

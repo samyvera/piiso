@@ -1,7 +1,7 @@
 class Display {
     constructor(game) {
         this.frame = 0;
-        this.zoom = 3;
+        this.zoom = 4;
 
         this.game = game;
         this.scale = 16;
@@ -10,8 +10,8 @@ class Display {
         this.backgroundImg = document.createElement("img");
         this.backgroundImg.src = "img/background.png";
 
-        // this.blockImg = document.createElement("img");
-        // this.blockImg.src = "img/block.png";
+        this.blockImg = document.createElement("img");
+        this.blockImg.src = "img/block.png";
         // this.playerImg = document.createElement("img");
         // this.playerImg.src = "img/player.png";
 
@@ -101,12 +101,11 @@ class Display {
 
         this.drawScene = () => {
             this.cx.translate(
-                this.canvas.width / 2 / this.zoom,
-                this.canvas.height / 2 / this.zoom
+                this.canvas.width / 2 / this.zoom - this.scale / 2,
+                this.canvas.height / 2 / this.zoom - this.scale * 2.5
             );
 
             var scene = this.game.scene;
-            var player = scene.players[0];
 
             for (let i = 0, k = 0; i < scene.size.x * scene.size.z + 2; i++, k = (i + 1) / 2) {
                 for (let x = 0; x <= k; x++) {
@@ -116,29 +115,32 @@ class Display {
                                 if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
                                     var tilePos = v3toV2(new Vector3D(x, y, z));
 
-                                    // this.cx.drawImage(this.blockImg,
-                                    //     texturePos.x * this.scale,
-                                    //     texturePos.y * this.scale,
-                                    //     this.scale, this.scale,
-                                    //     tilePos.x * this.scale,
-                                    //     tilePos.y * this.scale,
-                                    //     this.scale, this.scale
-                                    // );
-
-                                    this.cx.fillStyle = '#0f0';
-                                    this.cx.fillRect(
+                                    this.cx.drawImage(this.blockImg,
+                                        0,
+                                        0,
+                                        this.scale, this.scale,
                                         tilePos.x * this.scale,
                                         tilePos.y * this.scale,
                                         this.scale, this.scale
                                     );
+
+                                    // this.cx.fillStyle = '#0f0';
+                                    // this.cx.fillRect(
+                                    //     tilePos.x * this.scale,
+                                    //     tilePos.y * this.scale,
+                                    //     this.scale, this.scale
+                                    // );
                                 }
 
                                 // if (player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor)).round().equals(new Vector3D(x, y, z))) {
                                 //     this.drawPlayerShadow(v3toV2(player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor))));
                                 // }
-                                if (new Vector3D(Math.round(player.collisionBox.pos.x), Math.round(player.collisionBox.pos.y), Math.floor(player.collisionBox.pos.z)).equals(new Vector3D(x, y, z))) {
-                                    this.drawPlayer(player, v3toV2(player.collisionBox.pos));
-                                }
+                                
+                                scene.players.forEach(player => {
+                                    if (new Vector3D(Math.round(player.collisionBox.pos.x), Math.round(player.collisionBox.pos.y), Math.floor(player.collisionBox.pos.z)).equals(new Vector3D(x, y, z))) {
+                                        this.drawPlayer(player, v3toV2(player.collisionBox.pos));
+                                    }
+                                });
                             }
                         }
                     }
@@ -146,8 +148,8 @@ class Display {
             }
 
             this.cx.translate(
-                -this.canvas.width / 2 / this.zoom,
-                -this.canvas.height / 2 / this.zoom
+                -this.canvas.width / 2 / this.zoom + this.scale / 2,
+                -this.canvas.height / 2 / this.zoom + this.scale * 2.5
             );
         }
 
