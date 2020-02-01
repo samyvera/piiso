@@ -7,7 +7,7 @@ class Player {
 
         this.action = null;
 
-        this.coolDown = 0;
+        this.coolDown = 30;
         this.hitstun = 0;
 
         this.ACTIONS = ["THROW_HAMMER", "ADD_BLOCK"];
@@ -16,7 +16,7 @@ class Player {
         this.jumpSpeed = 0.15625;
         this.speed = new Vector3D(0, 0, 0);
         this.isJumping = false;
-        this.direction = new Vector2D(-0.5, 0.5);
+        this.direction = null;
         this.distanceFromFloor = 0;
         this.hammer = null;
 

@@ -9,7 +9,7 @@ class Hammer {
         };
         this.collisionBox = new CollisionBox({
             ...pos
-        }, new Vector3D(0.5, 0.5, 0.5));
+        }, new Vector3D(1, 1, 1));
         this.isDestroyed = false;
 
         this.moveXY = (game, player) => {

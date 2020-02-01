@@ -132,35 +132,35 @@ class Display {
             //         for (let y = 0; y <= k; y++) {
             //             for (let z = 0; z <= k; z++) {
             //                 if (x + y + z === k) {
-                
-                for (let z = 0; z < scene.size.z; z++) {
-                    for (let x = 0; x < scene.size.x; x++) {
-                        for (let y = 0; y < scene.size.y; y++) {
-                                if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
-                                    var tilePos = v3toV2(new Vector3D(x, y, z));
 
-                                    this.cx.drawImage(this.blockImg,
-                                        0,
-                                        0,
-                                        this.scale, this.scale,
-                                        tilePos.x * this.scale,
-                                        tilePos.y * this.scale,
-                                        this.scale, this.scale
-                                    );
+            for (let z = 0; z < scene.size.z; z++) {
+                for (let x = 0; x < scene.size.x; x++) {
+                    for (let y = 0; y < scene.size.y; y++) {
+                        if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
+                            var tilePos = v3toV2(new Vector3D(x, y, z));
 
-                                    // this.cx.fillStyle = '#0f0';
-                                    // this.cx.fillRect(
-                                    //     tilePos.x * this.scale,
-                                    //     tilePos.y * this.scale,
-                                    //     this.scale, this.scale
-                                    // );
-                                }
+                            this.cx.drawImage(this.blockImg,
+                                0,
+                                0,
+                                this.scale, this.scale,
+                                tilePos.x * this.scale,
+                                tilePos.y * this.scale,
+                                this.scale, this.scale
+                            );
 
-                                scene.players.forEach(player => {
-                                    if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
-                                        this.drawPlayer(player, v3toV2(player.collisionBox.pos));
-                                    }
-                                });
+                            // this.cx.fillStyle = '#0f0';
+                            // this.cx.fillRect(
+                            //     tilePos.x * this.scale,
+                            //     tilePos.y * this.scale,
+                            //     this.scale, this.scale
+                            // );
+                        }
+
+                        scene.players.forEach(player => {
+                            if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
+                                this.drawPlayer(player, v3toV2(player.collisionBox.pos));
+                            }
+                        });
                         //     }
                         // }
                     }
@@ -197,7 +197,7 @@ class Display {
                 );
             }
         }
- 
+
         this.drawHUD = () => {
             var scene = this.game.scene;
             scene.players.forEach((player, i) => {
@@ -207,7 +207,7 @@ class Display {
                     this.canvas.height / 2 / this.zoom - this.scale * 2,
                     2, this.scale * 5
                 );
-                
+
                 this.cx.fillStyle = '#0f0';
                 this.cx.fillRect(
                     this.canvas.width / 2 / this.zoom + this.scale * 7 + this.scale * 14 * -i,
@@ -215,14 +215,6 @@ class Display {
                     2, this.scale * player.collisionBox.pos.z / 2 // ici
                 );
             });
-
-            this.cx.drawImage(
-                this.keyboardControls,
-                0, 0,
-                128, 32,
-                8, 8,
-                128, 32
-            );
         }
 
         this.update = () => {
@@ -287,6 +279,15 @@ class Display {
                     24
                 );
                 this.cx.globalAlpha = 1;
+
+                // controls
+                this.cx.drawImage(
+                    this.keyboardControls,
+                    0, 0,
+                    160, 32,
+                    8, 8,
+                    160, 32
+                );
             }
 
             this.frame++;
