@@ -14,6 +14,7 @@ class Player {
         this.isJumping = false;
         this.direction = new Vector2D(-0.5, 0.5);
         this.distanceFromFloor = 0;
+        this.hammer = null;
 
         this.moveXY = (game, inputs) => {
             this.speed.x = 0;
@@ -82,6 +83,13 @@ class Player {
         this.addBlock = () => {
 
         }
+
+        this.throwHammer = () => {
+            // if (!hammer) {
+                this.hammer = new Hammer(this.collisionBox.pos, this.direction);
+                console.log(this.hammer);
+            // }
+        }
         
         this.socdCleaner = inputs => {
             var cleanedInputs = inputs;
@@ -108,9 +116,14 @@ class Player {
             if (this.isJumping) this.isJumping = false;
             else if (inputs.a && isOnFloor) {
                 console.log("a");
+                console.log(this.hammer);
+
             }
-            else if (inputs.b) {
-                console.log("b");
+            // if (this.hammer.pos.y === 0) {
+                
+            // }
+            if (inputs.b) {
+                this.throwHammer();
             }
 
             this.moveXY(game, inputs);

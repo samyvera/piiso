@@ -12,7 +12,7 @@ class Scene {
             new Vector3D(0.5, 0.5, 1.5)
         );
 
-        this.size = new Vector3D(12, 12, 4);
+        this.size = new Vector3D(8, 8, 8);
         this.collisionBox = new CollisionBox(
             new Vector3D(0, 0, 0),
             this.size
@@ -27,7 +27,12 @@ class Scene {
         this.gravity = new Vector3D(0, 0, 0.015625);
 
         this.update = game => {
-            this.players.forEach(player => player.update(game));
+            this.players.forEach(player => {
+                player.update(game);
+                if (player.hammer != null) {
+                    player.hammer.update(game, player);
+                }
+            });
         }
     }
 }
