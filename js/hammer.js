@@ -16,7 +16,7 @@ class Hammer {
             game.players.map((p) => {
                 if (p.id != player.id && this.collisionBox.collidesWith(p.collisionBox)) {
                     console.log('touch');
-                    p.coolDown = 180;
+                    p.coolDown = 90;
                 }
             })
         }

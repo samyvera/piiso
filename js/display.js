@@ -61,16 +61,20 @@ class Display {
 
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
-            this.cx.drawImage(player.id === this.game.scene.player1.id ? this.playerImg : this.player2Img,
-                10 * xPos,
-                16 * yPos,
-                10,
-                16,
-                playerPos.x * this.scale + this.scale / 8,
-                playerPos.y * this.scale - this.scale / 2 + this.scale / 4,
-                10,
-                16
-            );
+            var modifier = player.coolDown ? player.coolDown % 2 : 1;
+
+            if (modifier) {
+                this.cx.drawImage(player.id === this.game.scene.player1.id ? this.playerImg : this.player2Img,
+                    10 * xPos,
+                    16 * yPos,
+                    10,
+                    16,
+                    playerPos.x * this.scale + this.scale / 8,
+                    playerPos.y * this.scale - this.scale / 2 + this.scale / 4,
+                    10,
+                    16
+                );
+            }
 
             // this.cx.drawImage(this.playerImg,
             //     0,
@@ -108,19 +112,19 @@ class Display {
             this.cx.drawImage(this.backgroundImg,
                 0,
                 0,
-                128,
-                64,
-                this.canvas.width / 2 / this.zoom - 128 / 2,
-                this.canvas.height / 2 / this.zoom - 64 / 2,
-                128,
-                64
+                192,
+                96,
+                this.canvas.width / 2 / this.zoom - 192 / 2,
+                this.canvas.height / 2 / this.zoom - 96 / 2,
+                192,
+                96
             );
         }
 
         this.drawScene = () => {
             this.cx.translate(
                 this.canvas.width / 2 / this.zoom - this.scale / 2,
-                this.canvas.height / 2 / this.zoom - this.scale * 2.5
+                this.canvas.height / 2 / this.zoom - this.scale * 3.5
             );
 
             var scene = this.game.scene;
@@ -177,7 +181,7 @@ class Display {
 
             this.cx.translate(
                 -this.canvas.width / 2 / this.zoom + this.scale / 2,
-                -this.canvas.height / 2 / this.zoom + this.scale * 2.5
+                -this.canvas.height / 2 / this.zoom + this.scale * 3.5
             );
         }
 

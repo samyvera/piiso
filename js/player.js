@@ -98,10 +98,8 @@ class Player {
         }
 
         this.throwHammer = () => {
-            // if (hammer === null) {
-                this.hammer = new Hammer(this.collisionBox.pos, this.direction);
-                // (this.hammer);
-            // }
+            this.hammer = new Hammer(this.collisionBox.pos, this.direction);
+            this.coolDown = 30;
         }
         
         this.socdCleaner = inputs => {

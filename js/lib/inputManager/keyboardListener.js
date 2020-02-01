@@ -17,7 +17,7 @@ class KeyboardListener {
             s: "down",
             o: "a",
             p: "b",
-            Space: "c"
+            i: "c"
         };
 
         this.handler = event => {
