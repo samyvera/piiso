@@ -135,9 +135,9 @@ class Display {
                                 // if (player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor)).round().equals(new Vector3D(x, y, z))) {
                                 //     this.drawPlayerShadow(v3toV2(player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor))));
                                 // }
-                                
+
                                 scene.players.forEach(player => {
-                                    if (new Vector3D(Math.round(player.collisionBox.pos.x), Math.round(player.collisionBox.pos.y), Math.floor(player.collisionBox.pos.z)).equals(new Vector3D(x, y, z))) {
+                                    if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
                                         this.drawPlayer(player, v3toV2(player.collisionBox.pos));
                                     }
                                 });
@@ -151,6 +151,25 @@ class Display {
                 -this.canvas.width / 2 / this.zoom + this.scale / 2,
                 -this.canvas.height / 2 / this.zoom + this.scale * 3.5
             );
+        }
+
+        this.drawHUD = () => {
+            var scene = this.game.scene;
+
+            scene.players.forEach((player, i) => {
+                this.cx.fillStyle = "#fff";
+                this.cx.font = 8 + "px consolas";
+                this.cx.fillText(
+                    "posX:" + player.collisionBox.pos.x + " posY:" + player.collisionBox.pos.y + " posZ:" + player.collisionBox.pos.z,
+                    2,
+                    8 + i * 16
+                );
+                this.cx.fillText(
+                    "dirX:" + player.direction.x + " dirY:" + player.direction.y,
+                    2,
+                    16 + i * 16
+                );
+            });
         }
 
         this.update = () => {
@@ -173,27 +192,11 @@ class Display {
             this.drawBackground();
 
             //scene
-
-            if (this.game.scene) this.drawScene();
-
-            //interface
-
             if (this.game.scene) {
-                var scene = this.game.scene;
-                var player = scene.players[0];
-                this.cx.fillStyle = "#fff";
-                this.cx.font = 8 + "px consolas";
-                this.cx.fillText(
-                    "posX:" + player.collisionBox.pos.x + " posY:" + player.collisionBox.pos.y + " posZ:" + player.collisionBox.pos.z,
-                    2,
-                    8
-                );
-                this.cx.fillText(
-                    "dirX:" + player.direction.x + " dirY:" + player.direction.y,
-                    2,
-                    16
-                );
+                this.drawScene();
 
+                //hud
+                this.drawHUD();
             }
 
             this.frame++;

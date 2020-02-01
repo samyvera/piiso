@@ -4,6 +4,10 @@ class Player {
 
         this.collisionBox = null;
 
+        this.action = null;
+
+        this.ACTIONS = ["THROW_HAMMER", "ADD_BLOCK"];
+
         this.walkSpeed = 0.03125 * 2;
         this.jumpSpeed = 0.15625;
         this.speed = new Vector3D(0, 0, 0);
@@ -75,21 +79,10 @@ class Player {
             }
         }
 
-        this.update = game => {
-            var inputs = this.socdCleaner({...game.inputList.get(this.id)});
-            var lastInputs = game.lastInputList.get(this.id);
+        this.addBlock = () => {
 
-            var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, -this.jumpSpeed)), this.collisionBox.size.plus(new Vector3D(0, 0, this.jumpSpeed)));
-            if (this.isJumping) this.isJumping = false;
-            else if (
-                !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length)) {
-                if (inputs.a) this.isJumping = true;
-            }
-
-            this.moveXY(game, inputs);
-            this.moveZ(game);
         }
-
+        
         this.socdCleaner = inputs => {
             var cleanedInputs = inputs;
             if (cleanedInputs.left && cleanedInputs.right) {
@@ -100,6 +93,28 @@ class Player {
                 cleanedInputs.down = false;
             }
             return cleanedInputs;
+        }
+
+        this.update = game => {
+            var inputs = this.socdCleaner({...game.inputList.get(this.id)});
+            var lastInputs = game.lastInputList.get(this.id);
+
+            var newCollisionBox = new CollisionBox(
+                this.collisionBox.pos.plus(new Vector3D(0, 0, -this.jumpSpeed)),
+                this.collisionBox.size.plus(new Vector3D(0, 0, this.jumpSpeed))
+            );
+            var isOnFloor = !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length);
+
+            if (this.isJumping) this.isJumping = false;
+            else if (inputs.a && isOnFloor) {
+                console.log("a");
+            }
+            else if (inputs.b) {
+                console.log("b");
+            }
+
+            this.moveXY(game, inputs);
+            this.moveZ(game);
         }
     }
 }

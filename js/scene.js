@@ -19,7 +19,10 @@ class Scene {
         )
 
         this.blocks = new Map();
-        this.blocks.set('0, 0, 0', new CollisionBox(new Vector3D(0, 0, 0), new Vector3D(1, 1, 1)))
+        this.blocks.set('0, 0, 0', new CollisionBox(new Vector3D(0, 0, 0), new Vector3D(1, 1, 1)));
+        this.blocks.set('11, 0, 0', new CollisionBox(new Vector3D(11, 0, 0), new Vector3D(1, 1, 1)));
+        this.blocks.set('0, 11, 0', new CollisionBox(new Vector3D(0, 11, 0), new Vector3D(1, 1, 1)));
+        this.blocks.set('11, 11, 0', new CollisionBox(new Vector3D(11, 11, 0), new Vector3D(1, 1, 1)));
 
         this.gravity = new Vector3D(0, 0, 0.015625);
 
