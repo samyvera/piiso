@@ -39,14 +39,12 @@ class Hammer {
             }
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(this.speed.x, 0, 0)), this.collisionBox.size);
-            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
-                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length) {
                 this.collisionBox = newCollisionBox;
             }
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, this.speed.y, 0)), this.collisionBox.size);
-            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
-                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length) {
                 this.collisionBox = newCollisionBox;
             }
         }
@@ -55,21 +53,10 @@ class Hammer {
             this.speed.z -= game.scene.gravity.z;
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
-            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
-                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length && this.collisionBox.pos.z >= 0) {
                 this.collisionBox = newCollisionBox;
             } else {
                 this.isDestroyed = true;
-                console.log(newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]));
-            }
-
-            var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
-            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
-                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
-                this.collisionBox = newCollisionBox;
-            } else {
-                this.isDestroyed = true;
-                console.log(newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]));
             }
         }
 

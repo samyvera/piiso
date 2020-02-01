@@ -16,6 +16,8 @@ class Display {
         this.blockImg.src = "img/block.png";
         this.playerImg = document.createElement("img");
         this.playerImg.src = "img/player.png";
+        this.player2Img = document.createElement("img");
+        this.player2Img.src = "img/player2.png";
         this.playerShadowImg = document.createElement("img");
         this.playerShadowImg.src = "img/playerShadow.png";
         this.hammerImg = document.createElement("img");
@@ -59,7 +61,7 @@ class Display {
 
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
-            this.cx.drawImage(this.playerImg,
+            this.cx.drawImage(player.id === this.game.scene.player1.id ? this.playerImg : this.player2Img,
                 10 * xPos,
                 16 * yPos,
                 10,
@@ -92,7 +94,7 @@ class Display {
         this.drawHammer = (hammer, hammerPos) => {
             this.cx.fillStyle = '#000';
             this.cx.drawImage(this.hammerImg,
-                0,
+                this.scale * (Math.floor(this.frame / 4) % 4),
                 0,
                 this.scale, this.scale,
                 hammerPos.x * this.scale,
@@ -123,11 +125,15 @@ class Display {
 
             var scene = this.game.scene;
 
-            for (let i = 0, k = 0; i < scene.size.x * scene.size.z + 2; i++, k = (i + 1) / 2) {
-                for (let x = 0; x <= k; x++) {
-                    for (let y = 0; y <= k; y++) {
-                        for (let z = 0; z <= k; z++) {
-                            if (x + y + z === k) {
+            // for (let i = 0, k = 0; i < scene.size.x * scene.size.z + 2; i++, k = (i + 1) / 2) {
+            //     for (let x = 0; x <= k; x++) {
+            //         for (let y = 0; y <= k; y++) {
+            //             for (let z = 0; z <= k; z++) {
+            //                 if (x + y + z === k) {
+                
+                for (let z = 0; z < scene.size.z; z++) {
+                    for (let x = 0; x < scene.size.x; x++) {
+                        for (let y = 0; y < scene.size.y; y++) {
                                 if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
                                     var tilePos = v3toV2(new Vector3D(x, y, z));
 
@@ -156,8 +162,8 @@ class Display {
                                         }
                                     }
                                 });
-                            }
-                        }
+                        //     }
+                        // }
                     }
                 }
             }
@@ -174,20 +180,19 @@ class Display {
 
         this.drawHUD = () => {
             var scene = this.game.scene;
-
             scene.players.forEach((player, i) => {
-                this.cx.fillStyle = "#fff";
-                this.cx.font = 8 + "px consolas";
-                this.cx.fillText(
-                    "posX:" + player.collisionBox.pos.x + " posY:" + player.collisionBox.pos.y + " posZ:" + player.collisionBox.pos.z,
-                    2,
-                    8 + i * 16
-                );
-                this.cx.fillText(
-                    "dirX:" + player.direction.x + " dirY:" + player.direction.y,
-                    2,
-                    16 + i * 16
-                );
+                // this.cx.fillStyle = "#fff";
+                // this.cx.font = 8 + "px consolas";
+                // this.cx.fillText(
+                //     "posX:" + player.collisionBox.pos.x + " posY:" + player.collisionBox.pos.y + " posZ:" + player.collisionBox.pos.z,
+                //     2,
+                //     8 + i * 16
+                // );
+                // this.cx.fillText(
+                //     "dirX:" + player.direction.x + " dirY:" + player.direction.y,
+                //     2,
+                //     16 + i * 16
+                // );
             });
         }
 
