@@ -66,6 +66,11 @@ class Display {
         this.p2headImg = document.createElement("img");
         this.p2headImg.src = 'img/p2head.png';
 
+        this.waitingImg = document.createElement("img");
+        this.waitingImg.src = 'img/waiting.png';
+        this.okImg = document.createElement("img");
+        this.okImg.src = 'img/ok.png';
+
         this.playersHeads = [this.p1headImg, this.p2headImg];
         this.playersColors = ["#BEE3FF", "#FAB9F0"];
 
@@ -288,7 +293,7 @@ class Display {
             //background
             this.drawBackground();
 
-            //scene
+            // //scene
             if (this.game.frame < this.game.introEndFrame) {
                 this.cx.fillStyle = "#000";
                 this.cx.fillRect(0, 0, this.canvas.width / this.zoom, this.canvas.height / this.zoom);
@@ -474,7 +479,70 @@ class Display {
                     this.canvas.width / this.zoom - 168, 8,
                     160, 64
                 );
+
+                //player input press
+                for (let i = 0; i < 2; i++) {
+                    if (this.game.players[i]) {
+                        this.cx.fillStyle = '#fff';
+                        this.cx.fillRect(
+                            -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 9.03,
+                            this.canvas.height / 2 / this.zoom + 52,
+                            this.scale * 2.1, this.scale * 1.6
+                        );
+
+                        this.cx.fillStyle = this.playersColors[i];
+                        this.cx.fillRect(
+                            -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8.98,
+                            this.canvas.height / 2 / this.zoom + this.scale * 3.3,
+                            this.scale * 2, this.scale * 1.5
+                        );
+    
+                        this.cx.drawImage(
+                            this.okImg,
+                            0, 0,
+                            64, 16,
+                            -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 32,
+                            this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * 0 / 2 + 10,
+                            64, 16
+                        );
+                    } else {
+                        this.cx.fillStyle = '#fff';
+                        this.cx.fillRect(
+                            -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 10.55,
+                            this.canvas.height / 2 / this.zoom + 52,
+                            this.scale * 5.1, this.scale * 1.6
+                        );
+        
+                        this.cx.fillStyle = this.playersColors[i];
+                        this.cx.fillRect(
+                            -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 10.5,
+                            this.canvas.height / 2 / this.zoom + this.scale * 3.3,
+                            this.scale * 5, this.scale * 1.5
+                        );
+
+                        this.cx.drawImage(
+                            this.waitingImg,
+                            0, 0,
+                            64, 16,
+                            -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 32,
+                            this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * 0 / 2 + 10,
+                            64, 16
+                        );
+                    }
+    
+                    this.cx.drawImage(
+                        this.playersHeads[i],
+                        0, 0,
+                        16, 16,
+                        -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 5,
+                        this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * 0 / 2 - 5,
+                        16, 16
+                    );
+                }
             }
+
+
+            
 
             this.frame++;
         }
