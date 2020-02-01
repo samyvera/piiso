@@ -186,18 +186,19 @@ class Display {
         this.drawHUD = () => {
             var scene = this.game.scene;
             scene.players.forEach((player, i) => {
-                // this.cx.fillStyle = "#fff";
-                // this.cx.font = 8 + "px consolas";
-                // this.cx.fillText(
-                //     "posX:" + player.collisionBox.pos.x + " posY:" + player.collisionBox.pos.y + " posZ:" + player.collisionBox.pos.z,
-                //     2,
-                //     8 + i * 16
-                // );
-                // this.cx.fillText(
-                //     "dirX:" + player.direction.x + " dirY:" + player.direction.y,
-                //     2,
-                //     16 + i * 16
-                // );
+                this.cx.fillStyle = '#f0f0f0';
+                this.cx.fillRect(
+                    this.canvas.width / 2 / this.zoom + this.scale * 7 + this.scale * 14 * -i,
+                    this.canvas.height / 2 / this.zoom - this.scale * 2,
+                    2, this.scale * 5
+                );
+                
+                this.cx.fillStyle = '#0f0';
+                this.cx.fillRect(
+                    this.canvas.width / 2 / this.zoom + this.scale * 7 + this.scale * 14 * -i,
+                    this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * player.collisionBox.pos.z / 2, // ici
+                    2, this.scale * player.collisionBox.pos.z / 2 // ici
+                );
             });
         }
 
