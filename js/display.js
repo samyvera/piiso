@@ -7,6 +7,9 @@ class Display {
         this.scale = 16;
         this.shadowStep = 1 / 16;
 
+        this.intro1Img = document.createElement("img");
+        this.intro1Img.src = "img/intro1.png";
+
         this.backgroundImg = document.createElement("img");
         this.backgroundImg.src = "img/background.png";
 
@@ -30,6 +33,8 @@ class Display {
         this.winner2Img.src = 'img/win2.png';
         this.keyboardControls = document.createElement("img");
         this.keyboardControls.src = 'img/keyboard-controls.png';
+        this.gamepadControls = document.createElement("img");
+        this.gamepadControls.src = 'img/gamepad-controls.png';
         this.layerImg = document.createElement("img");
         this.layerImg.src = 'img/layer.png';
 
@@ -84,13 +89,13 @@ class Display {
             if (modifier) {
                 this.cx.drawImage(player.id === this.game.scene.player1.id ? this.playerImg : this.player2Img,
                     10 * xPos,
-                    16 * yPos,
+                    20 * yPos,
                     10,
-                    16,
+                    20,
                     playerPos.x * this.scale + this.scale / 8,
-                    playerPos.y * this.scale - this.scale / 2 + this.scale / 4,
+                    playerPos.y * this.scale - this.scale / 2 + this.scale / 8,
                     10,
-                    16
+                    20
                 );
             }
 
@@ -121,7 +126,7 @@ class Display {
                 196,
                 98,
                 this.canvas.width / 2 / this.zoom - 196 / 2,
-                this.canvas.height / 2 / this.zoom - 26,
+                this.canvas.height / 2 / this.zoom - 25,
                 196,
                 98
             );
@@ -209,8 +214,6 @@ class Display {
         this.drawHUD = () => {
             var scene = this.game.scene;
             scene.players.forEach((player, i) => {
-                console.log(this.scale * -4 * -i + this.canvas.width / 2 / this.zoom);
-                
 
                 this.cx.fillStyle = '#fff';
                 this.cx.fillRect(
@@ -264,7 +267,16 @@ class Display {
             this.drawBackground();
 
             //scene
-            if (this.game.scene) {
+            if (this.game.frame < this.game.introEndFrame) {
+                this.cx.fillStyle = "#000";
+                this.cx.fillRect(0,0, this.canvas.width / this.zoom, this.canvas.height / this.zoom)
+                this.cx.drawImage(this.intro1Img,
+                    0, 0, 300, 180,
+                    this.canvas.width / 2 / this.zoom - 300 / 2,
+                    this.canvas.height / 2 / this.zoom - 180 / 2,
+                    300, 180);
+            }
+            else if (this.game.scene) {
                 if (!this.game.scene.winner) {
                     this.drawScene();
                     this.drawLimit();
@@ -311,9 +323,16 @@ class Display {
                 this.cx.drawImage(
                     this.keyboardControls,
                     0, 0,
-                    160, 32,
+                    160, 64,
                     8, 8,
-                    160, 32
+                    160, 64
+                );
+                this.cx.drawImage(
+                    this.gamepadControls,
+                    0, 0,
+                    160, 64,
+                    this.canvas.width / this.zoom - 168, 8,
+                    160, 64
                 );
             }
 
