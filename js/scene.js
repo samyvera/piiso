@@ -3,6 +3,7 @@ class Scene {
         this.winner = null;
         this.players = players;
         this.player1 = this.players[0];
+        this.player1.hammer = null;
         this.player1.index = 1;
         this.player1.collisionBox = new CollisionBox(
             new Vector3D(0.25, 11.25, 0),
@@ -10,6 +11,7 @@ class Scene {
         );
         this.player1.direction = new Vector2D(0.5, 0.5);
         this.player2 = this.players[1];
+        this.player2.hammer = null;
         this.player2.index = 2;
         this.player2.collisionBox = new CollisionBox(
             new Vector3D(11.25, 0.25, 0),
