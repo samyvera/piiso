@@ -157,15 +157,18 @@ class Display {
                                 scene.players.forEach(player => {
                                     if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
                                         this.drawPlayer(player, v3toV2(player.collisionBox.pos));
-                                        if (player.hammer != null) {
-                                            this.drawHammer(player.hammer, v3toV2(player.hammer.collisionBox.pos));
-                                        }
                                     }
                                 });
                         //     }
                         // }
                     }
                 }
+
+                scene.players.forEach(player => {
+                    if (player.hammer) {
+                        this.drawHammer(player.hammer, v3toV2(player.hammer.collisionBox.pos));
+                    }
+                });
             }
 
             this.cx.globalAlpha = 0.5;

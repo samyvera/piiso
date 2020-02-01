@@ -132,11 +132,10 @@ class Player {
                 }
                 else if (inputs.a && !this.coolDown) {
                     this.addBlock(game);
-                } else if (inputs.b && !this.hammer) {
+                } else if (inputs.b && !this.hammer && !this.coolDown) {
                     this.throwHammer();
                 }
             }
-
 
             if (this.coolDown) this.coolDown--;
 

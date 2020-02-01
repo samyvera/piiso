@@ -49,7 +49,11 @@ class Hammer {
                 this.isDestroyed = true;
                 var blocks = newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]);
                 blocks.forEach(block => {
-                    game.scene.blocks.delete(Math.floor(block.pos.x) + ", " + Math.floor(block.pos.y) + ", " + Math.floor(block.pos.z));
+                    for (let i = game.scene.size.z; i >= block.pos.z; i--) {
+                        if (game.scene.blocks.has(block.pos.x + ", " + block.pos.y + ", " + i)) {
+                            game.scene.blocks.delete(block.pos.x + ", " + block.pos.y + ", " + i);
+                        }
+                    }
                 });
             }
 
@@ -60,7 +64,11 @@ class Hammer {
                 this.isDestroyed = true;
                 var blocks = newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]);
                 blocks.forEach(block => {
-                    game.scene.blocks.delete(Math.floor(block.pos.x) + ", " + Math.floor(block.pos.y) + ", " + Math.floor(block.pos.z));
+                    for (let i = game.scene.size.z; i >= block.pos.z; i--) {
+                        if (game.scene.blocks.has(block.pos.x + ", " + block.pos.y + ", " + i)) {
+                            game.scene.blocks.delete(block.pos.x + ", " + block.pos.y + ", " + i);
+                        }
+                    }
                 });
             }
         }
@@ -75,7 +83,11 @@ class Hammer {
                 this.isDestroyed = true;
                 var blocks = newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]);
                 blocks.forEach(block => {
-                    game.scene.blocks.delete(Math.floor(block.pos.x) + ", " + Math.floor(block.pos.y) + ", " + Math.floor(block.pos.z));
+                    for (let i = game.scene.size.z; i >= block.pos.z; i--) {
+                        if (game.scene.blocks.has(block.pos.x + ", " + block.pos.y + ", " + i)) {
+                            game.scene.blocks.delete(block.pos.x + ", " + block.pos.y + ", " + i);
+                        }
+                    }
                 });
             }
         }
