@@ -2,7 +2,7 @@ class Game {
     constructor(inputList) {
         this.frame = 0;
 
-        this.introEndFrame = 180;
+        this.introEndFrame = 300;
 
         this.inputList = inputList;
         this.lastInputList = new Map();

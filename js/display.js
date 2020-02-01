@@ -10,6 +10,22 @@ class Display {
 
         this.intro1Img = document.createElement("img");
         this.intro1Img.src = "img/intro1.png";
+        this.intro2Img = document.createElement("img");
+        this.intro2Img.src = "img/intro2.png";
+        this.intro3Img = document.createElement("img");
+        this.intro3Img.src = "img/intro3.png";
+        this.intro4Img = document.createElement("img");
+        this.intro4Img.src = "img/intro4.png";
+        this.intro5Img = document.createElement("img");
+        this.intro5Img.src = "img/intro5.png";
+        this.intro6Img = document.createElement("img");
+        this.intro6Img.src = "img/intro6.png";
+        this.intro7Img = document.createElement("img");
+        this.intro7Img.src = "img/intro7.png";
+        this.intro8Img = document.createElement("img");
+        this.intro8Img.src = "img/intro8.png";
+        this.intro9Img = document.createElement("img");
+        this.intro9Img.src = "img/intro9.png";
 
         this.backgroundImg = document.createElement("img");
         this.backgroundImg.src = "img/background.png";
@@ -228,7 +244,7 @@ class Display {
                     this.canvas.height / 2 / this.zoom - this.scale * 2,
                     2, this.scale * 5
                 );
-                
+
                 this.cx.fillStyle = this.playersColors[i];
                 this.cx.fillRect(
                     -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8,
@@ -269,14 +285,89 @@ class Display {
             //scene
             if (this.game.frame < this.game.introEndFrame) {
                 this.cx.fillStyle = "#000";
-                this.cx.fillRect(0,0, this.canvas.width / this.zoom, this.canvas.height / this.zoom)
-                this.cx.drawImage(this.intro1Img,
-                    0, 0, 300, 180,
-                    this.canvas.width / 2 / this.zoom - 300 / 2,
-                    this.canvas.height / 2 / this.zoom - 180 / 2,
-                    300, 180);
-            }
-            else if (this.game.scene) {
+                this.cx.fillRect(0, 0, this.canvas.width / this.zoom, this.canvas.height / this.zoom);
+                var frame = this.game.frame;
+                if (frame < 60) {
+                    this.cx.globalAlpha = this.game.frame / 60;
+                    this.cx.drawImage(this.intro1Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                    this.cx.globalAlpha = 1;
+                } else if (frame < 120) {
+                    this.cx.drawImage(this.intro1Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 125) {
+                    this.cx.drawImage(this.intro2Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 135) {
+                    this.cx.drawImage(this.intro1Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 140) {
+                    this.cx.drawImage(this.intro3Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 145) {
+                    this.cx.drawImage(this.intro4Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 160) {
+                    this.cx.drawImage(this.intro5Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 195) {
+                    this.cx.drawImage(this.intro6Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 210) {
+                    this.cx.drawImage(this.intro7Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 225) {
+                    this.cx.drawImage(this.intro8Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 240) {
+                    this.cx.drawImage(this.intro9Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                }
+            } else if (this.game.scene) {
                 if (!this.game.scene.winner) {
                     this.drawScene();
                     this.drawLimit();

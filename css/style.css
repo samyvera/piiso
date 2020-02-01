@@ -5,8 +5,18 @@ body {
   margin: 0;
   display: flex;
   background: #000;
+  background-image: url('./../img/banner.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+p {
+  margin: 16px 0 0 16px;
 }
 
 canvas {
   margin: auto;
+  cursor: none;
 }

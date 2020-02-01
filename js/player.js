@@ -13,7 +13,7 @@ class Player {
         this.ACTIONS = ["THROW_HAMMER", "ADD_BLOCK"];
 
         this.walkSpeed = 0.03125 * 2;
-        this.jumpSpeed = 0.15625;
+        this.jumpSpeed = 0.15625 + 0.03125 * 2;
         this.speed = new Vector3D(0, 0, 0);
         this.isJumping = false;
         this.direction = null;
