@@ -86,8 +86,10 @@ class Player {
             this.speed.z = 1;
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
+            var enemy = game.scene.players.find(player => player.id !== this.id);
+
             if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
-                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+                newCollisionBox.isIncludedIn(game.scene.collisionBox) && !new CollisionBox({...this.collisionBox.pos.floor()}, new Vector3D(1, 1, 1)).intersects(enemy.collisionBox)) {
                 var pos = this.collisionBox.pos.floor();
                 game.scene.blocks.set(pos.x + ", " + pos.y + ", " + pos.z, new CollisionBox({...pos}, new Vector3D(1, 1, 1)));
                 this.collisionBox = newCollisionBox;
