@@ -41,15 +41,27 @@ class Hammer {
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(this.speed.x, 0, 0)), this.collisionBox.size);
             if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length) {
                 this.collisionBox = newCollisionBox;
+            } else {
+                this.isDestroyed = true;
+                var blocks = newCollisionBox.intersectingCollisonBoxes([...game.scene.blocks.values()]);
+                blocks.forEach(block => {
+                    game.scene.blocks.delete(Math.floor(block.pos.x) + ", " + Math.floor(block.pos.y) + ", " + Math.floor(block.pos.z));
+                });
             }
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, this.speed.y, 0)), this.collisionBox.size);
             if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length) {
                 this.collisionBox = newCollisionBox;
+            } else {
+                this.isDestroyed = true;
+                var blocks = newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]);
+                blocks.forEach(block => {
+                    game.scene.blocks.delete(Math.floor(block.pos.x) + ", " + Math.floor(block.pos.y) + ", " + Math.floor(block.pos.z));
+                });
             }
         }
 
-        this.moveZ = (game) => {
+        this.moveZ = game => {
             this.speed.z -= game.scene.gravity.z;
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
@@ -57,6 +69,10 @@ class Hammer {
                 this.collisionBox = newCollisionBox;
             } else {
                 this.isDestroyed = true;
+                var blocks = newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]);
+                blocks.forEach(block => {
+                    game.scene.blocks.delete(Math.floor(block.pos.x) + ", " + Math.floor(block.pos.y) + ", " + Math.floor(block.pos.z));
+                });
             }
         }
 
