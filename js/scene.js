@@ -17,6 +17,9 @@ class Scene {
         );
         this.player2.direction = new Vector2D(-0.5, -0.5);
 
+        this.introEndFrame = 120;
+        this.introFrame = this.introEndFrame;
+
         this.size = new Vector3D(12, 12, 12);
         this.collisionBox = new CollisionBox(
             new Vector3D(0, 0, 0),
@@ -33,7 +36,8 @@ class Scene {
         }
 
         this.update = game => {
-            if (!this.winner) {
+            if (this.introFrame) this.introFrame--;
+            else if (!this.winner) {
                 this.players.forEach(player => {
                     player.update(game);
                 });

@@ -25,6 +25,13 @@ class Game {
                     ...input
                 }));
             }
+            else {
+                var skip = false;
+                this.inputList.forEach(inputList => {
+                    if (Object.values(inputList).find(input => input)) skip = true;
+                });
+                if(skip) this.introEndFrame = this.frame;
+            }
             this.frame++;
         }
     }
