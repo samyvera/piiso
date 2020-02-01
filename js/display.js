@@ -24,6 +24,14 @@ class Display {
         this.hammerImg.src = "img/hammer.png";
         this.limitImg = document.createElement("img");
         this.limitImg.src = "img/limit.png";
+        this.winner1Img = document.createElement("img");
+        this.winner1Img.src = 'img/win1.png';
+        this.winner2Img = document.createElement("img");
+        this.winner2Img.src = 'img/win2.png';
+        this.keyboardControls = document.createElement("img");
+        this.keyboardControls.src = 'img/keyboard-controls.png';
+        this.layerImg = document.createElement("img");
+        this.layerImg.src = 'img/layer.png';
 
         this.drawPlayer = (player, playerPos) => {
             var playerFrameSpeed = 16;
@@ -63,7 +71,7 @@ class Display {
 
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
-            var modifier = player.coolDown ? player.coolDown % 2 : 1;
+            var modifier = player.hitstun ? player.hitstun % 2 : 1;
 
             if (modifier) {
                 this.cx.drawImage(player.id === this.game.scene.player1.id ? this.playerImg : this.player2Img,
@@ -92,6 +100,13 @@ class Display {
         }
 
         this.drawBackground = () => {
+            this.cx.drawImage(this.layerImg,
+                0, 0,
+                512, 512,
+                this.canvas.width / 2 / this.zoom - 256,
+                this.canvas.height / 2 / this.zoom - 256 + 24,
+                512, 512
+            );
             this.cx.drawImage(this.backgroundImg,
                 0,
                 0,
@@ -200,6 +215,14 @@ class Display {
                     2, this.scale * player.collisionBox.pos.z / 2 // ici
                 );
             });
+
+            this.cx.drawImage(
+                this.keyboardControls,
+                0, 0,
+                128, 32,
+                8, 8,
+                128, 32
+            );
         }
 
         this.update = () => {
@@ -207,8 +230,8 @@ class Display {
             //skybox
 
             var gradient = this.cx.createLinearGradient(0, 0, 0, this.canvas.height / this.zoom);
-            gradient.addColorStop(0, "rgba(128, 128, 160, 1)");
-            gradient.addColorStop(1, "rgba(32, 32, 64, 1)");
+            gradient.addColorStop(0, "#e1c58b");
+            gradient.addColorStop(1, "#84dbd6");
 
             this.cx.fillStyle = gradient;
             this.cx.fillRect(
@@ -223,22 +246,47 @@ class Display {
 
             //scene
             if (this.game.scene) {
-                this.drawScene();
-                this.drawLimit();
-
-                //hud
-                this.drawHUD();
+                if (!this.game.scene.winner) {
+                    this.drawScene();
+                    this.drawLimit();
+                    this.drawHUD();
+                } else {
+                    console.log("winner" + this.game.scene.winner.index + "Img")
+                    this.cx.drawImage(this["winner" + this.game.scene.winner.index + "Img"],
+                        0,
+                        0,
+                        256,
+                        64,
+                        this.canvas.width / 2 / this.zoom - 256 / 2,
+                        this.canvas.height / 2 / this.zoom - 64 / 2,
+                        256,
+                        64
+                    );
+                }
             } else {
                 this.cx.drawImage(this.titleImg,
                     0,
                     0,
                     256,
-                    64,
+                    40,
                     this.canvas.width / 2 / this.zoom - 256 / 2,
                     this.canvas.height / 2 / this.zoom - 64 / 2,
                     256,
-                    64
+                    40
                 );
+                var alpha = 0.5 + 1 / (Math.floor(this.frame / 2) % 20) * 2;
+                this.cx.globalAlpha = alpha;
+                this.cx.drawImage(this.titleImg,
+                    0,
+                    40,
+                    256,
+                    24,
+                    this.canvas.width / 2 / this.zoom - 256 / 2,
+                    40 + this.canvas.height / 2 / this.zoom - 64 / 2,
+                    256,
+                    24
+                );
+                this.cx.globalAlpha = 1;
             }
 
             this.frame++;
