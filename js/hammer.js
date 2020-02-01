@@ -12,7 +12,16 @@ class Hammer {
         }, new Vector3D(0.5, 0.5, 0.5));
         this.isDestroyed = false;
 
-        this.moveXY = (game) => {
+        this.touch = (game, player) => {
+            game.players.map((p) => {
+                if (p.id != player.id && this.collisionBox.collidesWith(p.collisionBox)) {
+                    console.log('touch');
+                    p.coolDown = 180;
+                }
+            })
+        }
+
+        this.moveXY = (game, player) => {
             this.speed.x = 0;
             this.speed.y = 0;
 
@@ -71,10 +80,22 @@ class Hammer {
                     }
                 });
             }
+
+            this.touch(game, player);
         }
 
-        this.moveZ = game => {
+
+
+        this.moveZ = (game, player) => {
             this.speed.z -= game.scene.gravity.z;
+            
+            game.scene.players.map((p) => {
+                if (p.id != player.id && this.collisionBox.collidesWith(p.collisionBox)) {
+                    console.log('touch');
+                    
+                    p.coolDown = 180;
+                }
+            })
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
             if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length && this.collisionBox.pos.z >= 0) {
@@ -90,11 +111,13 @@ class Hammer {
                     }
                 });
             }
+
+            this.touch(game, player);
         }
 
         this.update = (game, player) => {
-            this.moveXY(game);
-            this.moveZ(game);
+            this.moveXY(game, player);
+            this.moveZ(game, player);
             if (this.isDestroyed) {
                 player.hammer = null;
             }
