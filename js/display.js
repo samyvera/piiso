@@ -22,6 +22,8 @@ class Display {
         this.playerShadowImg.src = "img/playerShadow.png";
         this.hammerImg = document.createElement("img");
         this.hammerImg.src = "img/hammer.png";
+        this.limitImg = document.createElement("img");
+        this.limitImg.src = "img/limit.png";
 
         this.drawPlayer = (player, playerPos) => {
             var playerFrameSpeed = 16;
@@ -96,7 +98,7 @@ class Display {
                 192,
                 96,
                 this.canvas.width / 2 / this.zoom - 192 / 2,
-                this.canvas.height / 2 / this.zoom - 96 / 2,
+                this.canvas.height / 2 / this.zoom - 24,
                 192,
                 96
             );
@@ -105,7 +107,7 @@ class Display {
         this.drawScene = () => {
             this.cx.translate(
                 this.canvas.width / 2 / this.zoom - this.scale / 2,
-                this.canvas.height / 2 / this.zoom - this.scale * 3.5
+                this.canvas.height / 2 / this.zoom - this.scale * 2
             );
 
             var scene = this.game.scene;
@@ -162,10 +164,25 @@ class Display {
 
             this.cx.translate(
                 -this.canvas.width / 2 / this.zoom + this.scale / 2,
-                -this.canvas.height / 2 / this.zoom + this.scale * 3.5
+                -this.canvas.height / 2 / this.zoom + this.scale * 2
             );
         }
 
+        this.drawLimit = () => {
+            if (this.game.scene.players.find((p) => p.collisionBox.pos.z > 7)) {
+                this.cx.drawImage(this.limitImg,
+                    0,
+                    0,
+                    192,
+                    96,
+                    this.canvas.width / 2 / this.zoom - 192 / 2,
+                    this.canvas.height / 2 / this.zoom - 96 / 2 - this.scale * 3.5,
+                    192,
+                    96
+                );
+            }
+        }
+ 
         this.drawHUD = () => {
             var scene = this.game.scene;
             scene.players.forEach((player, i) => {
@@ -206,6 +223,7 @@ class Display {
             //scene
             if (this.game.scene) {
                 this.drawScene();
+                this.drawLimit();
 
                 //hud
                 this.drawHUD();
