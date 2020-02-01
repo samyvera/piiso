@@ -76,27 +76,9 @@ class Display {
                 );
             }
 
-            // this.cx.drawImage(this.playerImg,
-            //     0,
-            //     0,
-            //     this.scale / 2, this.scale,
-            //     playerPos.x * this.scale + this.scale / 4,
-            //     playerPos.y * this.scale - this.scale / 4,
-            //     this.scale / 2, this.scale
-            // );
         }
 
-        // this.drawRotated = (degrees) => {
-        //     context.clearRect(0,0,canvas.width,canvas.height);
-        //     context.save();
-        //     context.translate(canvas.width/2,canvas.height/2);
-        //     context.rotate(degrees*Math.PI/180);
-        //     context.drawImage(image,-image.width/2,-image.width/2);
-        //     context.restore();
-        // }
-
         this.drawHammer = (hammer, hammerPos) => {
-            this.cx.fillStyle = '#000';
             this.cx.drawImage(this.hammerImg,
                 this.scale * (Math.floor(this.frame / 4) % 4),
                 0,
@@ -105,7 +87,6 @@ class Display {
                 hammerPos.y * this.scale,
                 this.scale, this.scale
             );
-            // this.drawRotated(hammer.degrees)
         }
 
         this.drawBackground = () => {
