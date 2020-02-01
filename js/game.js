@@ -2,7 +2,7 @@ class Game {
     constructor(inputList) {
         this.frame = 0;
 
-        this.introEndFrame = 300;
+        this.introEndFrame = 420;
 
         this.checkEndFrame = 60;
         this.checkFrame = this.checkEndFrame;

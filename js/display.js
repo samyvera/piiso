@@ -26,6 +26,10 @@ class Display {
         this.intro8Img.src = "img/intro8.png";
         this.intro9Img = document.createElement("img");
         this.intro9Img.src = "img/intro9.png";
+        this.intro10Img = document.createElement("img");
+        this.intro10Img.src = "img/intro10.png";
+        this.intro11Img = document.createElement("img");
+        this.intro11Img.src = "img/intro11.png";
 
         this.backgroundImg = document.createElement("img");
         this.backgroundImg.src = "img/background.png";
@@ -371,6 +375,32 @@ class Display {
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
                         this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 300) {
+                    this.cx.drawImage(this.intro10Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                } else if (frame < 350) {
+                    this.cx.drawImage(this.intro11Img,
+                        0, 0, 300, 180,
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / 2 / this.zoom - 180 / 2,
+                        300, 180
+                    );
+                    if (frame > 320 && frame < 350) {
+                        this.cx.globalAlpha = (frame - 320) / 30;
+                        this.cx.fillRect(0, 0, this.canvas.width / this.zoom, this.canvas.height / this.zoom);
+                        this.cx.globalAlpha = 1;
+                    }
+                } else if (frame < 420) {
+                    this.cx.fillStyle = '#f00';
+                    this.cx.fillRect(
+                        this.canvas.width / 2 / this.zoom - 300 / 2,
+                        this.canvas.height / this.zoom - 180 / 2 - (frame - 350) * 8,
                         300, 180
                     );
                 }
