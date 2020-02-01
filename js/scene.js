@@ -1,5 +1,6 @@
 class Scene {
     constructor(players) {
+        this.victory = null;
         this.players = players;
         this.player1 = this.players[0];
         this.player1.collisionBox = new CollisionBox(
@@ -26,9 +27,17 @@ class Scene {
 
         this.gravity = new Vector3D(0, 0, 0.015625);
 
+        this.checkVictory = (player) => {
+            if (player.collisionBox.pos.z === 10 && !player.isJumping) {
+                console.log(`Completo ! Player ${player.id} Win`);
+                this.victory = player.id
+            }
+        }
+
         this.update = game => {
             this.players.forEach(player => {
                 player.update(game);
+                this.checkVictory(player)
             });
         }
     }
