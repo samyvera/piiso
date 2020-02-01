@@ -1,13 +1,15 @@
 class Scene {
     constructor(players) {
-        this.victory = null;
+        this.winner = null;
         this.players = players;
         this.player1 = this.players[0];
+        this.player1.index = 1;
         this.player1.collisionBox = new CollisionBox(
             new Vector3D(0.25, 0.25, 1),
             new Vector3D(0.5, 0.5, 1.5)
         );
         this.player2 = this.players[1];
+        this.player2.index = 2;
         this.player2.collisionBox = new CollisionBox(
             new Vector3D(3.25, 3.25, 0),
             new Vector3D(0.5, 0.5, 1.5)
@@ -27,18 +29,18 @@ class Scene {
 
         this.gravity = new Vector3D(0, 0, 0.015625);
 
-        this.checkVictory = (player) => {
-            if (player.collisionBox.pos.z === 10 && !player.isJumping) {
-                console.log(`Completo ! Player ${player.id} Win`);
-                this.victory = player.id
-            }
+        this.checkVictory = game => {
+            var winner = game.scene.players.find(player => player.collisionBox.pos.z === 10 && !player.isJumping);
+            if (winner) this.winner = winner;
         }
 
         this.update = game => {
-            this.players.forEach(player => {
-                player.update(game);
-                this.checkVictory(player)
-            });
+            if (!this.winner) {
+                this.players.forEach(player => {
+                    player.update(game);
+                });
+                this.checkVictory(game);
+            }
         }
     }
 }

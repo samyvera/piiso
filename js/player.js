@@ -1,12 +1,14 @@
 class Player {
-    constructor(id) {
+    constructor(id, index) {
         this.id = id;
+        this.index = index;
 
         this.collisionBox = null;
 
         this.action = null;
 
         this.coolDown = 0;
+        this.hitstun = 0;
 
         this.ACTIONS = ["THROW_HAMMER", "ADD_BLOCK"];
 
@@ -130,14 +132,15 @@ class Player {
                 if (inputs.c) {
                     this.speed.z = this.jumpSpeed;
                 }
-                else if (inputs.a && !this.coolDown) {
+                else if (inputs.a && !this.coolDown && !this.hitstun) {
                     this.addBlock(game);
-                } else if (inputs.b && !this.hammer && !this.coolDown) {
+                } else if (inputs.b && !this.hammer && !this.coolDown && !this.hitstun) {
                     this.throwHammer();
                 }
             }
 
             if (this.coolDown) this.coolDown--;
+            if (this.hitstun) this.hitstun--;
 
             this.moveXY(game, inputs);
             this.moveZ(game);
