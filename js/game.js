@@ -4,6 +4,9 @@ class Game {
 
         this.introEndFrame = 300;
 
+        this.checkEndFrame = 60;
+        this.checkFrame = this.checkEndFrame;
+
         this.inputList = inputList;
         this.lastInputList = new Map();
 
@@ -14,7 +17,8 @@ class Game {
         this.update = keys => {
             if (this.frame > this.introEndFrame) {
                 if (this.players.length === 2) {
-                    if (!this.scene) this.scene = new Scene(this.players);
+                    if (this.checkFrame) this.checkFrame--;
+                    else if (!this.scene) this.scene = new Scene(this.players);
                     else this.scene.update(this);
                 } else if (this.inputList.size !== this.players.size) {
                     this.inputList.forEach((input, id) => {
