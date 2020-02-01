@@ -12,7 +12,7 @@ class Scene {
             new Vector3D(0.5, 0.5, 1.5)
         );
 
-        this.size = new Vector3D(8, 8, 8);
+        this.size = new Vector3D(8, 8, 12);
         this.collisionBox = new CollisionBox(
             new Vector3D(0, 0, 0),
             this.size

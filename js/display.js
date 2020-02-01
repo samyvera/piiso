@@ -16,6 +16,8 @@ class Display {
         this.blockImg.src = "img/block.png";
         this.playerImg = document.createElement("img");
         this.playerImg.src = "img/player.png";
+        this.playerShadowImg = document.createElement("img");
+        this.playerShadowImg.src = "img/playerShadow.png";
         this.hammerImg = document.createElement("img");
         this.hammerImg.src = "img/hammer.png";
 
@@ -57,25 +59,25 @@ class Display {
 
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
-            // this.cx.drawImage(this.playerImg,
-            //     this.scale * 1.5 * xPos,
-            //     this.scale * 1.5 * yPos,
-            //     this.scale * 1.5,
-            //     this.scale * 1.5,
-            //     playerPos.x * this.scale - this.scale / 4,
-            //     playerPos.y * this.scale - this.scale / 2 - this.scale / 4,
-            //     this.scale * 1.5,
-            //     this.scale * 1.5
-            // );
-
             this.cx.drawImage(this.playerImg,
-                0,
-                0,
-                this.scale / 2, this.scale,
-                playerPos.x * this.scale + this.scale / 4,
-                playerPos.y * this.scale - this.scale / 4,
-                this.scale / 2, this.scale
+                10 * xPos,
+                16 * yPos,
+                10,
+                16,
+                playerPos.x * this.scale + this.scale / 8,
+                playerPos.y * this.scale - this.scale / 2 + this.scale / 4,
+                10,
+                16
             );
+
+            // this.cx.drawImage(this.playerImg,
+            //     0,
+            //     0,
+            //     this.scale / 2, this.scale,
+            //     playerPos.x * this.scale + this.scale / 4,
+            //     playerPos.y * this.scale - this.scale / 4,
+            //     this.scale / 2, this.scale
+            // );
         }
 
         // this.drawRotated = (degrees) => {
@@ -87,7 +89,7 @@ class Display {
         //     context.restore();
         // }
 
-        this.drawHammer = (hammer,hammerPos) => {
+        this.drawHammer = (hammer, hammerPos) => {
             this.cx.fillStyle = '#000';
             this.cx.drawImage(this.hammerImg,
                 0,
@@ -100,19 +102,6 @@ class Display {
             console.log('drawHammer');
             console.log('hammerPos :', hammerPos);
             // this.drawRotated(hammer.degrees)
-        }
-
-        this.drawPlayerShadow = playerShadowPos => {
-            this.cx.drawImage(this.playerImg,
-                0,
-                this.scale * 1.5 * 8,
-                this.scale * 1.5,
-                this.scale * 1.5,
-                playerShadowPos.x * this.scale - this.scale / 4,
-                playerShadowPos.y * this.scale - this.scale / 2 - this.scale / 4,
-                this.scale * 1.5,
-                this.scale * 1.5
-            );
         }
 
         this.drawBackground = () => {
@@ -136,43 +125,43 @@ class Display {
 
             var scene = this.game.scene;
 
-            for (let z = 0; z < scene.size.z; z++) {
-                for (let x = 0; x < scene.size.x; x++) {
-                    for (let y = 0; y < scene.size.y; y++) {
-                        if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
-                            var tilePos = v3toV2(new Vector3D(x, y, z));
+            for (let i = 0, k = 0; i < scene.size.x * scene.size.z + 2; i++, k = (i + 1) / 2) {
+                for (let x = 0; x <= k; x++) {
+                    for (let y = 0; y <= k; y++) {
+                        for (let z = 0; z <= k; z++) {
+                            if (x + y + z === k) {
+                                if (scene.blocks.has(x + ', ' + y + ', ' + z)) {
+                                    var tilePos = v3toV2(new Vector3D(x, y, z));
 
-                            this.cx.drawImage(this.blockImg,
-                                0,
-                                0,
-                                this.scale, this.scale,
-                                tilePos.x * this.scale,
-                                tilePos.y * this.scale,
-                                this.scale, this.scale
-                            );
+                                    this.cx.drawImage(this.blockImg,
+                                        0,
+                                        0,
+                                        this.scale, this.scale,
+                                        tilePos.x * this.scale,
+                                        tilePos.y * this.scale,
+                                        this.scale, this.scale
+                                    );
 
-                            // this.cx.fillStyle = '#0f0';
-                            // this.cx.fillRect(
-                            //     tilePos.x * this.scale,
-                            //     tilePos.y * this.scale,
-                            //     this.scale, this.scale
-                            // );
-                        }
+                                    // this.cx.fillStyle = '#0f0';
+                                    // this.cx.fillRect(
+                                    //     tilePos.x * this.scale,
+                                    //     tilePos.y * this.scale,
+                                    //     this.scale, this.scale
+                                    // );
+                                }
 
-                        // if (player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor)).round().equals(new Vector3D(x, y, z))) {
-                        //     this.drawPlayerShadow(v3toV2(player.pos.plus(new Vector3D(0, 0, -player.distanceFromFloor))));
-                        // }
-
-                        scene.players.forEach(player => {
-                            if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
-                                this.drawPlayer(player, v3toV2(player.collisionBox.pos));
+                                scene.players.forEach(player => {
+                                    if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
+                                        this.drawPlayer(player, v3toV2(player.collisionBox.pos));
+                                    }
+                                });
                             }
-                        });
+                        }
                     }
                 }
             }
 
-            this.cx.globalAlpha = 0.25;
+            this.cx.globalAlpha = 0.5;
             scene.players.forEach(player => this.drawPlayer(player, v3toV2(player.collisionBox.pos)));
             this.cx.globalAlpha = 1;
 

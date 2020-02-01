@@ -78,6 +78,7 @@ class Player {
                     this.distanceFromFloor = this.collisionBox.pos.z - (block.pos.z + block.size.z);
                     break;
                 }
+                else if (z === 0) this.distanceFromFloor = this.collisionBox.pos.z;
             }
         }
 
@@ -88,11 +89,9 @@ class Player {
             if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
                 newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
                 var pos = this.collisionBox.pos.floor();
-                if (pos.z === 0 || game.scene.blocks.has(pos.x + ", " + pos.y + ", " + pos.z-1)) {
-                    game.scene.blocks.set(pos.x + ", " + pos.y + ", " + pos.z, new CollisionBox(new Vector3D(pos.x, pos.y, pos.z), new Vector3D(1, 1, 1)));
-                    this.collisionBox = newCollisionBox;
-                    this.coolDown = 30;
-                }
+                game.scene.blocks.set(pos.x + ", " + pos.y + ", " + pos.z, new CollisionBox({...pos}, new Vector3D(1, 1, 1)));
+                this.collisionBox = newCollisionBox;
+                this.coolDown = 30;
             }
 
             this.speed.z = 0;
@@ -122,13 +121,16 @@ class Player {
             var lastInputs = game.lastInputList.get(this.id);
 
             var newCollisionBox = new CollisionBox(
-                this.collisionBox.pos.plus(new Vector3D(0, 0, -game.gravity)),
-                this.collisionBox.size.plus(new Vector3D(0, 0, game.gravity))
+                this.collisionBox.pos.plus(new Vector3D(0, 0, -0.0001)),
+                this.collisionBox.size.plus(new Vector3D(0, 0, 0.0001))
             );
             var isOnFloor = !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length);
 
             if (isOnFloor) {
-                if (inputs.a && !this.coolDown) {
+                if (inputs.c) {
+                    this.speed.z = this.jumpSpeed;
+                }
+                else if (inputs.a && !this.coolDown) {
                     this.addBlock(game);
                 } else if (inputs.b) {
                     this.throwHammer();

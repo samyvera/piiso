@@ -13,7 +13,7 @@ class InputManager {
                         "down": gamepad.axes[1] > 0.25,
                         "a": gamepad.buttons[1].value,
                         "b": gamepad.buttons[0].value,
-                        "start": gamepad.buttons[2].value
+                        "c": gamepad.buttons[2].value
                     });
                 }
             });
