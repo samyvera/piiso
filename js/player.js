@@ -128,14 +128,14 @@ class Player {
             );
             var isOnFloor = !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length);
 
-            if (isOnFloor) {
+            if (inputs.b && !this.hammer && !this.coolDown && !this.hitstun) {
+                this.throwHammer();
+            } else if (isOnFloor) {
                 if (inputs.c) {
                     this.speed.z = this.jumpSpeed;
                 }
                 else if (inputs.a && !this.coolDown && !this.hitstun) {
                     this.addBlock(game);
-                } else if (inputs.b && !this.hammer && !this.coolDown && !this.hitstun) {
-                    this.throwHammer();
                 }
             }
 

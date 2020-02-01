@@ -54,6 +54,8 @@ class Display {
         this.gamepadControls.src = 'img/gamepad-controls.png';
         this.layerImg = document.createElement("img");
         this.layerImg.src = 'img/layer.png';
+        this.readyImg = document.createElement("img");
+        this.readyImg.src = 'img/ready.png';
 
         this.p1headImg = document.createElement("img");
         this.p1headImg.src = 'img/p1head.png';
@@ -376,7 +378,18 @@ class Display {
                 if (!this.game.scene.winner) {
                     this.drawScene();
                     this.drawLimit();
-                    this.drawHUD();
+                    if (this.game.scene.introFrame) {
+                        this.cx.globalAlpha = (this.game.scene.introEndFrame -this.game.scene.introFrame) / this.game.scene.introEndFrame;
+                        this.cx.drawImage(this.readyImg,
+                            0, 0,
+                            256, 64,
+                            this.canvas.width / 2 / this.zoom - 256 / 2,
+                            this.canvas.height / 2 / this.zoom - 64 / 2 + this.game.scene.introFrame / 2,
+                            256, 64
+                        );
+                        this.cx.globalAlpha = 1;
+                    }
+                    else this.drawHUD();
                 } else {
                     this.cx.drawImage(this["winner" + this.game.scene.winner.index + "Img"],
                         0,
