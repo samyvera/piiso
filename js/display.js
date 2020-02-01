@@ -118,12 +118,12 @@ class Display {
             this.cx.drawImage(this.backgroundImg,
                 0,
                 0,
-                192,
-                96,
-                this.canvas.width / 2 / this.zoom - 192 / 2,
-                this.canvas.height / 2 / this.zoom - 24,
-                192,
-                96
+                196,
+                98,
+                this.canvas.width / 2 / this.zoom - 196 / 2,
+                this.canvas.height / 2 / this.zoom - 26,
+                196,
+                98
             );
         }
 
@@ -212,7 +212,14 @@ class Display {
                 console.log(this.scale * -4 * -i + this.canvas.width / 2 / this.zoom);
                 
 
-                this.cx.fillStyle = '#f0f0f0';
+                this.cx.fillStyle = '#fff';
+                this.cx.fillRect(
+                    -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 1,
+                    this.canvas.height / 2 / this.zoom - this.scale * 2 - 1,
+                    4, this.scale * 5 + 2
+                );
+
+                this.cx.fillStyle = '#000';
                 this.cx.fillRect(
                     -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8,
                     this.canvas.height / 2 / this.zoom - this.scale * 2,
@@ -230,7 +237,7 @@ class Display {
                     this.playersHeads[i],
                     0, 0,
                     16, 16,
-                    -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 3,
+                    -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 5,
                     this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * player.collisionBox.pos.z / 2 - 5,
                     16, 16
                 );
