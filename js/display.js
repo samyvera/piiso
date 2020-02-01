@@ -33,6 +33,14 @@ class Display {
         this.layerImg = document.createElement("img");
         this.layerImg.src = 'img/layer.png';
 
+        this.p1headImg = document.createElement("img");
+        this.p1headImg.src = 'img/p1head.png';
+        this.p2headImg = document.createElement("img");
+        this.p2headImg.src = 'img/p2head.png';
+
+        this.playersHeads = [this.p1headImg, this.p2headImg];
+        this.playersColors = ["#BEE3FF", "#FAB9F0"];
+
         this.drawPlayer = (player, playerPos) => {
             var playerFrameSpeed = 16;
             var playerFrameLength = 4;
@@ -201,18 +209,30 @@ class Display {
         this.drawHUD = () => {
             var scene = this.game.scene;
             scene.players.forEach((player, i) => {
+                console.log(this.scale * -4 * -i + this.canvas.width / 2 / this.zoom);
+                
+
                 this.cx.fillStyle = '#f0f0f0';
                 this.cx.fillRect(
-                    this.canvas.width / 2 / this.zoom + this.scale * 7 + this.scale * 14 * -i,
+                    -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8,
                     this.canvas.height / 2 / this.zoom - this.scale * 2,
                     2, this.scale * 5
                 );
-
-                this.cx.fillStyle = '#0f0';
+                
+                this.cx.fillStyle = this.playersColors[i];
                 this.cx.fillRect(
-                    this.canvas.width / 2 / this.zoom + this.scale * 7 + this.scale * 14 * -i,
-                    this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * player.collisionBox.pos.z / 2, // ici
-                    2, this.scale * player.collisionBox.pos.z / 2 // ici
+                    -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8,
+                    this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * player.collisionBox.pos.z / 2,
+                    2, this.scale * player.collisionBox.pos.z / 2
+                );
+
+                this.cx.drawImage(
+                    this.playersHeads[i],
+                    0, 0,
+                    16, 16,
+                    -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 3,
+                    this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * player.collisionBox.pos.z / 2 - 5,
+                    16, 16
                 );
             });
         }
