@@ -29,9 +29,6 @@ class Scene {
         this.update = game => {
             this.players.forEach(player => {
                 player.update(game);
-                if (player.hammer != null) {
-                    player.hammer.update(game, player);
-                }
             });
         }
     }
