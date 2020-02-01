@@ -1,6 +1,7 @@
 class Display {
     constructor(game) {
         this.frame = 0;
+        this.timerRestart = 0;
         this.zoom = 4;
 
         this.game = game;
@@ -214,7 +215,6 @@ class Display {
         this.drawHUD = () => {
             var scene = this.game.scene;
             scene.players.forEach((player, i) => {
-
                 this.cx.fillStyle = '#fff';
                 this.cx.fillRect(
                     -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 8 - 1,
@@ -282,7 +282,6 @@ class Display {
                     this.drawLimit();
                     this.drawHUD();
                 } else {
-                    console.log("winner" + this.game.scene.winner.index + "Img")
                     this.cx.drawImage(this["winner" + this.game.scene.winner.index + "Img"],
                         0,
                         0,
@@ -293,6 +292,13 @@ class Display {
                         256,
                         64
                     );
+                    if (this.timerRestart === 0) {
+                        this.timerRestart = this.frame
+                    }
+                    if (this.timerRestart + 100 < this.frame) {
+                        this.timerRestart = 0;
+                        this.game.scene = new Scene(this.game.players);
+                    }
                 }
             } else {
                 this.cx.drawImage(this.titleImg,
