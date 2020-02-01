@@ -27,7 +27,12 @@ class Scene {
         this.gravity = new Vector3D(0, 0, 0.015625);
 
         this.update = game => {
-            this.players.forEach(player => player.update(game));
+            this.players.forEach(player => {
+                player.update(game);
+                if (player.hammer != null) {
+                    player.hammer.update(game, player);
+                }
+            });
         }
     }
 }

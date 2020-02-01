@@ -16,6 +16,8 @@ class Display {
         this.blockImg.src = "img/block.png";
         this.playerImg = document.createElement("img");
         this.playerImg.src = "img/player.png";
+        this.hammerImg = document.createElement("img");
+        this.hammerImg.src = "img/hammer.png";
 
         this.drawPlayer = (player, playerPos) => {
             var playerFrameSpeed = 16;
@@ -74,6 +76,30 @@ class Display {
                 playerPos.y * this.scale - this.scale / 4,
                 this.scale / 2, this.scale
             );
+        }
+
+        // this.drawRotated = (degrees) => {
+        //     context.clearRect(0,0,canvas.width,canvas.height);
+        //     context.save();
+        //     context.translate(canvas.width/2,canvas.height/2);
+        //     context.rotate(degrees*Math.PI/180);
+        //     context.drawImage(image,-image.width/2,-image.width/2);
+        //     context.restore();
+        // }
+
+        this.drawHammer = (hammer,hammerPos) => {
+            this.cx.fillStyle = '#000';
+            this.cx.drawImage(this.hammerImg,
+                0,
+                0,
+                this.scale, this.scale,
+                hammerPos.x * this.scale,
+                hammerPos.y * this.scale,
+                this.scale, this.scale
+            );
+            console.log('drawHammer');
+            console.log('hammerPos :', hammerPos);
+            // this.drawRotated(hammer.degrees)
         }
 
         this.drawPlayerShadow = playerShadowPos => {
