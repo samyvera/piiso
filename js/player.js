@@ -6,6 +6,8 @@ class Player {
 
         this.action = null;
 
+        this.coolDown = 0;
+
         this.ACTIONS = ["THROW_HAMMER", "ADD_BLOCK"];
 
         this.walkSpeed = 0.03125 * 2;
@@ -59,7 +61,6 @@ class Player {
 
         this.moveZ = game => {
             this.speed.z -= game.scene.gravity.z;
-            if (this.isJumping) this.speed.z = this.jumpSpeed;
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
             if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
@@ -79,8 +80,21 @@ class Player {
             }
         }
 
-        this.addBlock = () => {
+        this.addBlock = game => {
+            this.speed.z = 1;
 
+            var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
+            if (!newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length &&
+                newCollisionBox.isIncludedIn(game.scene.collisionBox)) {
+                var pos = this.collisionBox.pos.floor();
+                if (pos.z === 0 || game.scene.blocks.has(pos.x + ", " + pos.y + ", " + pos.z-1)) {
+                    game.scene.blocks.set(pos.x + ", " + pos.y + ", " + pos.z, new CollisionBox(new Vector3D(pos.x, pos.y, pos.z), new Vector3D(1, 1, 1)));
+                    this.collisionBox = newCollisionBox;
+                    this.coolDown = 30;
+                }
+            }
+
+            this.speed.z = 0;
         }
         
         this.socdCleaner = inputs => {
@@ -100,18 +114,19 @@ class Player {
             var lastInputs = game.lastInputList.get(this.id);
 
             var newCollisionBox = new CollisionBox(
-                this.collisionBox.pos.plus(new Vector3D(0, 0, -this.jumpSpeed)),
-                this.collisionBox.size.plus(new Vector3D(0, 0, this.jumpSpeed))
+                this.collisionBox.pos.plus(new Vector3D(0, 0, -game.gravity)),
+                this.collisionBox.size.plus(new Vector3D(0, 0, game.gravity))
             );
             var isOnFloor = !this.speed.z && (this.collisionBox.pos.z === 0 || newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]).length);
 
-            if (this.isJumping) this.isJumping = false;
-            else if (inputs.a && isOnFloor) {
-                console.log("a");
+            if (inputs.a && isOnFloor && !this.coolDown) {
+                this.addBlock(game);
             }
             else if (inputs.b) {
                 console.log("b");
             }
+
+            if (this.coolDown) this.coolDown--;
 
             this.moveXY(game, inputs);
             this.moveZ(game);
