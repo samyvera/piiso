@@ -12,20 +12,30 @@ class Hammer {
             this.speed.x = 0;
             this.speed.y = 0;
 
-            if (this.direction.equals(new Vector2D(0.5, -0.5))) {
-                this.speed.x -= this.xSpeed;
-                this.speed.y -= this.xSpeed;
-            } else if (this.direction.equals(new Vector2D(-0.5, 0.5))) {
+            if (this.direction.x === -0.5 && this.direction.y === 0.5) {
                 this.speed.x += this.xSpeed;
                 this.speed.y += this.xSpeed;
-            }
-
-            if (this.direction.equals(new Vector2D(-0.5, -0.5))) {
+            } else if (this.direction.x === 0.5 && this.direction.y === -0.5) {
                 this.speed.x -= this.xSpeed;
-                this.speed.y += this.xSpeed;
-            } else if (this.direction.equals(new Vector2D(0.5, 0.5))) {
+                this.speed.y -= this.xSpeed;
+            } else if (this.direction.x === 0.5 && this.direction.y === 0.5) {
                 this.speed.x += this.xSpeed;
                 this.speed.y -= this.xSpeed;
+            } else if (this.direction.x === -0.5 && this.direction.y === -0.5) {
+                this.speed.x -= this.xSpeed;
+                this.speed.y += this.xSpeed;
+            } else if (this.direction.x === 1 && this.direction.y === 0) {
+                this.speed.x = 0;
+                this.speed.y -= this.xSpeed;
+            } else if (this.direction.x === 0 && this.direction.y === 1) {
+                this.speed.x += this.xSpeed;
+                this.speed.y = 0;
+            } else if (this.direction.x === -1 && this.direction.y === 0) {
+                this.speed.x = 0;
+                this.speed.y += this.xSpeed;
+            } else if (this.direction.x === 0 && this.direction.y === -1) {
+                this.speed.x -= this.xSpeed;
+                this.speed.y = 0;
             }
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(this.speed.x, 0, 0)), this.collisionBox.size);
@@ -50,6 +60,7 @@ class Hammer {
                 this.collisionBox = newCollisionBox;
             } else {
                 this.isDestroyed = true;
+                console.log(newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]));
             }
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
@@ -58,6 +69,7 @@ class Hammer {
                 this.collisionBox = newCollisionBox;
             } else {
                 this.isDestroyed = true;
+                console.log(newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]));
             }
         }
 

@@ -97,8 +97,6 @@ class Display {
                 hammerPos.y * this.scale,
                 this.scale, this.scale
             );
-            console.log('drawHammer');
-            console.log('hammerPos :', hammerPos);
             // this.drawRotated(hammer.degrees)
         }
 
@@ -166,6 +164,9 @@ class Display {
                         scene.players.forEach(player => {
                             if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
                                 this.drawPlayer(player, v3toV2(player.collisionBox.pos));
+                                if (player.hammer != null) {
+                                    this.drawHammer(player.hammer, v3toV2(player.hammer.collisionBox.pos));
+                                }
                             }
                         });
                     }

@@ -99,9 +99,9 @@ class Player {
         }
 
         this.throwHammer = () => {
-            // if (!hammer) {
+            // if (hammer === null) {
                 this.hammer = new Hammer(this.collisionBox.pos, this.direction);
-                console.log(this.hammer);
+                // (this.hammer);
             // }
         }
         
