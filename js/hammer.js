@@ -48,12 +48,13 @@ class Hammer {
             } else if (!this.isDestroyed) {
                 this.isDestroyed = true;
                 var blocks = newCollisionBox.intersectingCollisionBoxes([...game.scene.blocks.values()]);
-                blocks.forEach(block => {
+                blocks.forEach(block => {                    
                     for (let i = game.scene.size.z; i >= block.pos.z; i--) {
                         if (game.scene.blocks.has(block.pos.x + ", " + block.pos.y + ", " + i)) {
                             game.scene.blocks.delete(block.pos.x + ", " + block.pos.y + ", " + i);
                         }
                     }
+                    
                 });
             }
 

@@ -114,8 +114,8 @@ class Display {
                 }
             }
 
-            if(player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/block.mp3'));
-            else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammerThroow.mp3'));
+            if(player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/blockPlace.mp3'));
+            else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammerThroow.wav'));
             // else if (player.action === "jump") this.audioManager.play(new Sound('sfx', 'audio/jump.mp3'));
 
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
