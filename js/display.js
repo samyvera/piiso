@@ -78,7 +78,7 @@ class Display {
         this.playersHeads = [this.p1headImg, this.p2headImg];
         this.playersColors = ["#BEE3FF", "#FAB9F0"];
 
-        this.drawPlayer = (player, playerPos) => {
+        this.drawPlayer = (player, playerPos, playSound) => {
             var playerFrameSpeed = 16;
             var playerFrameLength = 4;
             var yPos = 0;
@@ -114,12 +114,9 @@ class Display {
                 }
             }
 
-            if (!this.game.scene.introFrame) {
-
+            if (playSound) {
                 if (player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/add_block.mp3'));
                 else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammer.mp3'));
-                // else if (player.action === "jump") this.audioManager.play(new Sound('sfx', 'audio/jump.mp3'));
-
             }
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
@@ -197,7 +194,7 @@ class Display {
 
                         scene.players.forEach(player => {
                             if (player.collisionBox.pos.floor().equals(new Vector3D(x, y, z))) {
-                                this.drawPlayer(player, v3toV2(player.collisionBox.pos));
+                                this.drawPlayer(player, v3toV2(player.collisionBox.pos), true);
                             }
                         });
                     }
@@ -211,7 +208,7 @@ class Display {
             }
 
             this.cx.globalAlpha = 0.5;
-            scene.players.forEach(player => this.drawPlayer(player, v3toV2(player.collisionBox.pos)));
+            scene.players.forEach(player => this.drawPlayer(player, v3toV2(player.collisionBox.pos), false));
             this.cx.globalAlpha = 1;
 
             this.cx.translate(

@@ -122,6 +122,7 @@ class Player {
 
         this.update = game => {
             this.action = null;
+            
             var inputs = this.socdCleaner({...game.inputList.get(this.id)});
             var lastInputs = game.lastInputList.get(this.id);
 
@@ -142,6 +143,7 @@ class Player {
                     this.addBlock(game);
                 }
             }
+            console.log(this.action);
 
             if (this.coolDown) this.coolDown--;
             if (this.hitstun) this.hitstun--;
