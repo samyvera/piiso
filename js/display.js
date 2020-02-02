@@ -312,7 +312,7 @@ class Display {
                     );
                     this.cx.globalAlpha = 1;
                 } else if (frame < 120) {
-                    if (frame === 90 || frame === 119) this.audioManager.play(new Sound('sfx', 'audio/thunder.wav'));
+                    if (frame === 90 || frame === 119) this.audioManager.play(new Sound('sfx', 'audio/thunder.mp3'));
                     this.cx.drawImage(this.intro1Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -362,6 +362,7 @@ class Display {
                         300, 180
                     );
                 } else if (frame < 210) {
+                    if (frame === 195) this.audioManager.play(new Sound('sfx', 'audio/crash.mp3'));
                     this.cx.drawImage(this.intro7Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -369,6 +370,7 @@ class Display {
                         300, 180
                     );
                 } else if (frame < 225) {
+                    if (frame === 210) this.audioManager.play(new Sound('sfx', 'audio/crash.mp3'));
                     this.cx.drawImage(this.intro8Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -376,6 +378,7 @@ class Display {
                         300, 180
                     );
                 } else if (frame < 240) {
+                    if (frame === 225) this.audioManager.play(new Sound('sfx', 'audio/crash.mp3'));
                     this.cx.drawImage(this.intro9Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -390,7 +393,7 @@ class Display {
                         300, 180
                     );
                 } else if (frame < 350) {
-                    if (frame === 300) this.audioManager.play(new Sound('sfx', 'audio/surprise.wav'));
+                    if (frame === 300) this.audioManager.play(new Sound('sfx', 'audio/surprise.mp3'));
                     this.cx.drawImage(this.intro11Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -415,7 +418,7 @@ class Display {
                     this.drawScene();
                     this.drawLimit();
                     if (this.game.scene.introFrame) {
-                        if (this.game.scene.introFrame === 1) this.audioManager.play(new Sound('sfx', 'audio/music.wav'));
+                        if (this.game.scene.introFrame === 1) this.audioManager.play(new Sound('sfx', 'audio/music.mp3'));
                         this.cx.globalAlpha = (this.game.scene.introEndFrame -this.game.scene.introFrame) / this.game.scene.introEndFrame;
                         this.cx.drawImage(this.readyImg,
                             0, 0,
@@ -428,6 +431,7 @@ class Display {
                     }
                     else this.drawHUD();
                 } else {
+                    [...document.getElementsByClassName('audioElement')].map(element => element.remove());
                     this.cx.drawImage(this["winner" + this.game.scene.winner.index + "Img"],
                         0,
                         0,
@@ -439,7 +443,7 @@ class Display {
                         64
                     );
                     if (this.timerRestart === 0) {
-                        this.timerRestart = this.frame
+                        this.timerRestart = this.frame;
                     }
                     if (this.timerRestart + 100 < this.frame) {
                         this.timerRestart = 0;
@@ -447,6 +451,8 @@ class Display {
                     }
                 }
             } else {
+                [...document.getElementsByClassName('audioElement')].map(element => element.remove());
+
                 this.cx.drawImage(this.titleImg,
                     0,
                     0,
@@ -545,6 +551,13 @@ class Display {
                         this.canvas.height / 2 / this.zoom + this.scale * 3 - this.scale * 0 / 2 - 5,
                         16, 16
                     );
+                }
+                
+                if (this.game.frame < 500) {
+                    this.cx.globalAlpha = 1 - (this.game.frame - 420) / 80;
+                    this.cx.fillStyle = '#000';
+                    this.cx.fillRect(0, 0, this.canvas.width / this.zoom, this.canvas.height / this.zoom);
+                    this.cx.globalAlpha = 1;
                 }
             }
 
