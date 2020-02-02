@@ -117,6 +117,7 @@ class Display {
             if (playSound) {
                 if (player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/add_block.mp3'));
                 else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammer.mp3'));
+                else if (player.hitstun === 90) this.audioManager.play(new Sound('sfx', 'audio/hammerHit.wav'));
             }
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
