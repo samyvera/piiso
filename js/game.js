@@ -7,6 +7,8 @@ class Game {
         this.checkEndFrame = 60;
         this.checkFrame = this.checkEndFrame;
 
+        this.timerRestart = 0;
+
         this.inputList = inputList;
         this.lastInputList = new Map();
 

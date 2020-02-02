@@ -1,7 +1,6 @@
 class Display {
     constructor(game) {
         this.frame = 0;
-        this.timerRestart = 0;
         this.zoom = 4;
 
         this.audioManager = new AudioManager();
@@ -434,11 +433,11 @@ class Display {
                         256,
                         64
                     );
-                    if (this.timerRestart === 0) {
-                        this.timerRestart = this.frame;
+                    if (this.game.timerRestart === 0) {
+                        this.game.timerRestart = this.frame;
                     }
-                    if (this.timerRestart + 100 < this.frame) {
-                        this.timerRestart = 0;
+                    if (this.game.timerRestart + 100 < this.frame) {
+                        this.game.timerRestart = 0;
                         this.game.scene = new Scene(this.game.players);
                     }
                 }

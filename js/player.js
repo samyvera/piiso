@@ -143,8 +143,6 @@ class Player {
                     this.addBlock(game);
                 }
             }
-            console.log(this.action);
-
             if (this.coolDown) this.coolDown--;
             if (this.hitstun) this.hitstun--;
 
