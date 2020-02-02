@@ -12,7 +12,7 @@ class Hammer {
         }, new Vector3D(1, 1, 1));
         this.isDestroyed = false;
 
-        this.moveXY = (game, player) => {
+        this.moveXY = game => {
             this.speed.x = 0;
             this.speed.y = 0;
 
@@ -76,7 +76,7 @@ class Hammer {
 
 
 
-        this.moveZ = (game, player) => {
+        this.moveZ = game => {
             this.speed.z -= game.scene.gravity.z;
 
             var newCollisionBox = new CollisionBox(this.collisionBox.pos.plus(new Vector3D(0, 0, this.speed.z)), this.collisionBox.size);
@@ -97,17 +97,18 @@ class Hammer {
         }
 
         this.update = (game, player) => {
-            this.moveXY(game, player);
-            this.moveZ(game, player);
+            this.moveXY(game);
+            this.moveZ(game);
+            
+            var enemy = game.scene.players.find(p => player.id !== p.id);
+            if (enemy.hitstun === 0 && this.collisionBox.collidesWith(enemy.collisionBox)) {
+                enemy.hitstun = 90;
+                this.isDestroyed;
+            }
+            
             if (this.isDestroyed) {
                 player.hammer = null;
             }
-            
-            game.players.map((p) => {
-                if (p.id != player.id && this.collisionBox.collidesWith(p.collisionBox)) {
-                    p.hitstun = 90;
-                }
-            })
         }
     }
 }

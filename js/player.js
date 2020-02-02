@@ -143,17 +143,12 @@ class Player {
                     this.addBlock(game);
                 }
             }
-            console.log(this.action);
 
             if (this.coolDown) this.coolDown--;
             if (this.hitstun) this.hitstun--;
 
             this.moveXY(game, inputs);
             this.moveZ(game);
-
-            if (this.hammer != null) {
-                this.hammer.update(game, this);
-            }
         }
     }
 }

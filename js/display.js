@@ -114,10 +114,10 @@ class Display {
                 }
             }
 
-            if (playSound) {
+            if (playSound && !this.game.scene.introFrame) {
                 if (player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/add_block.mp3'));
                 else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammer.mp3'));
-                else if (player.hitstun === 90) this.audioManager.play(new Sound('sfx', 'audio/hammerHit.wav'));
+                else if (player.hitstun === 90) this.audioManager.play(new Sound('sfx', 'audio/hammerHit.mp3'));
             }
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
@@ -432,6 +432,7 @@ class Display {
                         64
                     );
                     if (this.timerRestart === 0) {
+                        // this.audioManager.play(new Sound('sfx', 'audio/victory.mp3'));
                         this.timerRestart = this.frame;
                     }
                     if (this.timerRestart + 100 < this.frame) {
