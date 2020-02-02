@@ -4,6 +4,8 @@ class Display {
         this.timerRestart = 0;
         this.zoom = 4;
 
+        this.audioManager = new AudioManager();
+
         this.game = game;
         this.scale = 16;
         this.shadowStep = 1 / 16;
@@ -30,6 +32,8 @@ class Display {
         this.intro10Img.src = "img/intro10.png";
         this.intro11Img = document.createElement("img");
         this.intro11Img.src = "img/intro11.png";
+        this.intro12Img = document.createElement("img");
+        this.intro12Img.src = "img/intro12.png";
 
         this.backgroundImg = document.createElement("img");
         this.backgroundImg.src = "img/background.png";
@@ -308,6 +312,7 @@ class Display {
                     );
                     this.cx.globalAlpha = 1;
                 } else if (frame < 120) {
+                    if (frame === 90 || frame === 119) this.audioManager.play(new Sound('sfx', 'audio/thunder.wav'));
                     this.cx.drawImage(this.intro1Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -385,6 +390,7 @@ class Display {
                         300, 180
                     );
                 } else if (frame < 350) {
+                    if (frame === 300) this.audioManager.play(new Sound('sfx', 'audio/surprise.wav'));
                     this.cx.drawImage(this.intro11Img,
                         0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
@@ -397,8 +403,8 @@ class Display {
                         this.cx.globalAlpha = 1;
                     }
                 } else if (frame < 420) {
-                    this.cx.fillStyle = '#f00';
-                    this.cx.fillRect(
+                    this.cx.drawImage(this.intro12Img,
+                        0, 0, 300, 180,
                         this.canvas.width / 2 / this.zoom - 300 / 2,
                         this.canvas.height / this.zoom - 180 / 2 - (frame - 350) * 8,
                         300, 180
