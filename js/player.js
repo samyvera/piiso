@@ -119,6 +119,7 @@ class Player {
         }
 
         this.update = game => {
+            this.action = null;
             var inputs = this.socdCleaner({...game.inputList.get(this.id)});
             var lastInputs = game.lastInputList.get(this.id);
 
@@ -130,11 +131,14 @@ class Player {
 
             if (inputs.b && !this.hammer && !this.coolDown && !this.hitstun) {
                 this.throwHammer();
+                this.action = 'hammer';
             } else if (isOnFloor) {
                 if (inputs.c) {
+                    this.action = 'jump';
                     this.speed.z = this.jumpSpeed;
                 }
                 else if (inputs.a && !this.coolDown && !this.hitstun) {
+                    this.action = 'block';
                     this.addBlock(game);
                 }
             }

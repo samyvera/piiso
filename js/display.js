@@ -415,6 +415,7 @@ class Display {
                     this.drawScene();
                     this.drawLimit();
                     if (this.game.scene.introFrame) {
+                        if (this.game.scene.introFrame === 1) this.audioManager.play(new Sound('sfx', 'audio/music.wav'));
                         this.cx.globalAlpha = (this.game.scene.introEndFrame -this.game.scene.introFrame) / this.game.scene.introEndFrame;
                         this.cx.drawImage(this.readyImg,
                             0, 0,
