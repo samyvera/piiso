@@ -96,6 +96,7 @@ class Player {
                 game.scene.blocks.set(pos.x + ", " + pos.y + ", " + pos.z, new CollisionBox({...pos}, new Vector3D(1, 1, 1)));
                 this.collisionBox = newCollisionBox;
                 this.coolDown = 30;
+                this.action = 'block';
             }
 
             this.speed.z = 0;
@@ -104,6 +105,7 @@ class Player {
         this.throwHammer = () => {
             this.hammer = new Hammer(this.collisionBox.pos, this.direction);
             this.coolDown = 30;
+            this.action = 'hammer';
         }
         
         this.socdCleaner = inputs => {
@@ -131,14 +133,12 @@ class Player {
 
             if (inputs.b && !this.hammer && !this.coolDown && !this.hitstun) {
                 this.throwHammer();
-                this.action = 'hammer';
             } else if (isOnFloor) {
                 if (inputs.c) {
                     this.action = 'jump';
                     this.speed.z = this.jumpSpeed;
                 }
                 else if (inputs.a && !this.coolDown && !this.hitstun) {
-                    this.action = 'block';
                     this.addBlock(game);
                 }
             }

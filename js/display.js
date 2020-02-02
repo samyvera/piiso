@@ -114,10 +114,13 @@ class Display {
                 }
             }
 
-            if(player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/blockPlace.mp3'));
-            else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammerThroow.wav'));
-            // else if (player.action === "jump") this.audioManager.play(new Sound('sfx', 'audio/jump.mp3'));
+            if (!this.game.scene.introFrame) {
 
+                if (player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/blockPlace.mp3'));
+                else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammerThroow.wav'));
+                // else if (player.action === "jump") this.audioManager.play(new Sound('sfx', 'audio/jump.mp3'));
+
+            }
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
             var modifier = player.hitstun ? player.hitstun % 2 : 1;
@@ -176,12 +179,6 @@ class Display {
 
             var scene = this.game.scene;
 
-            // for (let i = 0, k = 0; i < scene.size.x * scene.size.z + 2; i++, k = (i + 1) / 2) {
-            //     for (let x = 0; x <= k; x++) {
-            //         for (let y = 0; y <= k; y++) {
-            //             for (let z = 0; z <= k; z++) {
-            //                 if (x + y + z === k) {
-
             for (let z = 0; z < scene.size.z; z++) {
                 for (let x = 0; x < scene.size.x; x++) {
                     for (let y = 0; y < scene.size.y; y++) {
@@ -196,13 +193,6 @@ class Display {
                                 tilePos.y * this.scale,
                                 this.scale, this.scale
                             );
-
-                            // this.cx.fillStyle = '#0f0';
-                            // this.cx.fillRect(
-                            //     tilePos.x * this.scale,
-                            //     tilePos.y * this.scale,
-                            //     this.scale, this.scale
-                            // );
                         }
 
                         scene.players.forEach(player => {
@@ -210,8 +200,6 @@ class Display {
                                 this.drawPlayer(player, v3toV2(player.collisionBox.pos));
                             }
                         });
-                        //     }
-                        // }
                     }
                 }
 
@@ -422,8 +410,8 @@ class Display {
                     this.drawScene();
                     this.drawLimit();
                     if (this.game.scene.introFrame) {
-                        if (this.game.scene.introFrame === 1) this.audioManager.play(new Sound('sfx', 'audio/music.mp3'));
-                        this.cx.globalAlpha = (this.game.scene.introEndFrame -this.game.scene.introFrame) / this.game.scene.introEndFrame;
+                        if (this.game.scene.introFrame === 1) this.audioManager.play(new Sound('music', 'audio/music.mp3'));
+                        this.cx.globalAlpha = (this.game.scene.introEndFrame - this.game.scene.introFrame) / this.game.scene.introEndFrame;
                         this.cx.drawImage(this.readyImg,
                             0, 0,
                             256, 64,
@@ -432,8 +420,7 @@ class Display {
                             256, 64
                         );
                         this.cx.globalAlpha = 1;
-                    }
-                    else this.drawHUD();
+                    } else this.drawHUD();
                 } else {
                     [...document.getElementsByClassName('audioElement')].map(element => element.remove());
                     this.cx.drawImage(this["winner" + this.game.scene.winner.index + "Img"],
@@ -513,7 +500,7 @@ class Display {
                             this.canvas.height / 2 / this.zoom + this.scale * 3.3,
                             this.scale * 2, this.scale * 1.5
                         );
-    
+
                         this.cx.drawImage(
                             this.okImg,
                             0, 0,
@@ -529,7 +516,7 @@ class Display {
                             this.canvas.height / 2 / this.zoom + 52,
                             this.scale * 5.1, this.scale * 1.6
                         );
-        
+
                         this.cx.fillStyle = this.playersColors[i];
                         this.cx.fillRect(
                             -this.scale * 16 * -i + this.canvas.width / 2 / this.zoom - this.scale * 10.5,
@@ -546,7 +533,7 @@ class Display {
                             64, 16
                         );
                     }
-    
+
                     this.cx.drawImage(
                         this.playersHeads[i],
                         0, 0,
@@ -556,7 +543,7 @@ class Display {
                         16, 16
                     );
                 }
-                
+
                 if (this.game.frame < 500) {
                     this.cx.globalAlpha = 1 - (this.game.frame - 420) / 80;
                     this.cx.fillStyle = '#000';
@@ -566,7 +553,7 @@ class Display {
             }
 
 
-            
+
 
             this.frame++;
         }
