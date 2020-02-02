@@ -10,6 +10,7 @@ class Scene {
             new Vector3D(0.5, 0.5, 1.5)
         );
         this.player1.direction = new Vector2D(0.5, 0.5);
+
         this.player2 = this.players[1];
         this.player2.hammer = null;
         this.player2.index = 2;
@@ -40,8 +41,9 @@ class Scene {
         this.update = game => {
             if (this.introFrame) this.introFrame--;
             else if (!this.winner) {
+                this.players.forEach(player => player.update(game));
                 this.players.forEach(player => {
-                    player.update(game);
+                    if (player.hammer) player.hammer.update(game, player);
                 });
                 this.checkVictory(game);
             }

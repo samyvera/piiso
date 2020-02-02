@@ -113,13 +113,10 @@ class Display {
                 }
             }
 
-            if (playSound) {
-                if (player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/blockPlace.mp3'));
-                else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammerThroow.wav'));
-                else if (player.hitstun === 90) this.audioManager.play(new Sound('sfx', 'audio/hammerHit.wav'));
-
-                // else if (player.action === "jump") this.audioManager.play(new Sound('sfx', 'audio/jump.mp3'));
-
+            if (playSound && !this.game.scene.introFrame) {
+                if (player.action === "block") this.audioManager.play(new Sound('sfx', 'audio/add_block.mp3'));
+                else if (player.action === "hammer") this.audioManager.play(new Sound('sfx', 'audio/hammer.mp3'));
+                else if (player.hitstun === 90) this.audioManager.play(new Sound('sfx', 'audio/hammerHit.mp3'));
             }
             var xPos = Math.floor(this.frame / playerFrameSpeed) % playerFrameLength;
 
@@ -422,7 +419,6 @@ class Display {
                         this.cx.globalAlpha = 1;
                     } else this.drawHUD();
                 } else {
-                    [...document.getElementsByClassName('audioElement')].map(element => element.remove());
                     this.cx.drawImage(this["winner" + this.game.scene.winner.index + "Img"],
                         0,
                         0,
@@ -433,9 +429,14 @@ class Display {
                         256,
                         64
                     );
+
                     if (this.game.timerRestart === 0) {
+                        [...document.getElementsByClassName('audioElement')].map(element => element.remove());
+
                         this.game.timerRestart = this.frame;
+                        this.audioManager.play(new Sound('sfx', 'audio/victory.mp3'));
                     }
+
                     if (this.game.timerRestart + 100 < this.frame) {
                         this.game.timerRestart = 0;
                         this.game.scene = new Scene(this.game.players);

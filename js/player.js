@@ -148,10 +148,6 @@ class Player {
 
             this.moveXY(game, inputs);
             this.moveZ(game);
-
-            if (this.hammer != null) {
-                this.hammer.update(game, this);
-            }
         }
     }
 }
